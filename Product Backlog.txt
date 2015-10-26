@@ -1,0 +1,26 @@
+Product Backlog
+1: Som bruger vil jeg gerne kunne logge på en server.
+2: Som bruger vil jeg gerne kunne logge af en server.
+3: Som bruger vil jeg gerne kunne inviterer en anden bruger til et spil.
+4: Som bruger vil jeg gerne kunne acceptere/afslå en invitation.
+5: Som bruger vil jeg gerne kunne give spillet op når som helst.
+6: Som bruger vil jeg gerne kunne lukke spillet når som helst.
+7: Som bruger vil jeg gerne kunne se, hvis tur det er.
+8: Som bruger vil jeg gerne kunne tage min egen tur.
+9: Som bruger vil jeg gerne kunne se hvem, der har vundet spillet.
+10: Som bruger vil jeg gerne kunne se historik over spil.
+11: Som bruger vil jeg gerne kunne invitere en spiller til rematch efter endt spil.
+12: Som bruger vil jeg gerne kunne se nuværende score.
+13: Som bruger vil jeg gerne kunne se hvad min modstanders træk har været.
+14: Som bruger vil jeg gerne kunne se en komplet log over træk i spillet.
+15: Som bruger vil jeg gerne kunne gemme en kopi af spil-loggen.
+16: Som bruger vil jeg gerne kunne oprette/slette min en/min bruger.
+17: Som bruger skal jeg kunne se resterende tid af min tur.
+18: Som bruger skal jeg kunne se andre brugeres spil historik.
+
+Krav
+1: Serveren skal kunne bestemme, hvem som starter.
+2: Serveren skal kunne holde styr på, hvis tur det er.
+3: Serveren skal kunne validere om hvorvidt et træk er legalt.
+4: Serveren skal kunne bestemme, hvornår spillet er ovre.
+5: Serveren skal kunne bestemme, hvornår en bruger har givet op.
