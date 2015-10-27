@@ -12,7 +12,7 @@ public class ConnectionHandler {
 			if (userSocket != null) {
 				socnum++;
 				System.out.println(userSocket.getRemoteSocketAddress().toString());
-				ClientConnection conn = new ClientConnection(userSocket);
+				ServerConnection conn = new ServerConnection(userSocket);
 				conn.start();
 			}
 		}
