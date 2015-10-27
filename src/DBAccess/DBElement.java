@@ -3,7 +3,7 @@ package DBAccess;
 import java.sql.*;
 
 /**
- * Created by Peter on 27-10-2015.
+ * Created by Peter Jensen on 27-10-2015.
  */
 public abstract class DBElement
 {

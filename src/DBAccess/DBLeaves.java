@@ -4,7 +4,7 @@ import Server.User;
 import java.sql.SQLException;
 
 /**
- * Created by Peter on 27-10-2015.
+ * Created by Peter Jensen on 27-10-2015.
  */
 public class DBLeaves extends DBElement
 {
