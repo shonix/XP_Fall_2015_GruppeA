@@ -2,12 +2,8 @@
 -- ------------------------------------------ --
 -- Create a new database called mydb
 create database  if not exists mydb;
--- Use mydb for other statements
+ -- use mydb for other statements
 use mydb;
--- Create a user and password to database
-grant usage on *.* to sqluser@localhost identified by 'sqluserpw'; 
- -- Give user permission to create, read, update and delete
-grant all privileges on mydb.* to sqluser@localhost; 
 -- -----------------------------------------------------
 -- Table user
 -- -----------------------------------------------------
@@ -18,16 +14,7 @@ CREATE TABLE IF NOT EXISTS user (
   IP VARCHAR(15) NOT NULL,
   PRIMARY KEY (ID),
   UNIQUE INDEX name_UNIQUE (name ASC));
--- -----------------------------------------------------
--- Table status
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS status (
-  userID INT NOT NULL,
-  active BOOLEAN NOT NULL DEFAULT true,
-  ban BOOLEAN NOT NULL DEFAUlt false,
-  PRIMARY KEY (userID),
-  FOREIGN KEY (userID)
-  REFERENCES user (ID));
+
 -- -----------------------------------------------------
 -- Table gameStat
 -- -----------------------------------------------------
@@ -52,4 +39,3 @@ CREATE TABLE IF NOT EXISTS leaves (
   PRIMARY KEY (userID),
   FOREIGN KEY (userID)
   REFERENCES user (ID));
-
