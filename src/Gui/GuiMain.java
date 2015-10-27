@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xp_fall_2015_gruppea;
+package Gui;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import xp_fall_2015_gruppea.GameBoard;
 
 /**
  *
