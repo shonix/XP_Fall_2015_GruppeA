@@ -31,6 +31,9 @@ public class GameBoard {
         
         
         
+        
+        
+        
         Scene gameScene = new Scene(gameBox,100,100); 
         gameStage.setScene(gameScene);
         gameStage.show();
