@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xp_fall_2015_gruppea;
+package Gui;
 
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;

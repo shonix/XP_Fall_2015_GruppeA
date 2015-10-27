@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import xp_fall_2015_gruppea.GameBoard;
 
 /**
  *
@@ -54,6 +53,8 @@ public class GuiMain extends Application {
             @Override
             public void handle(ActionEvent event) {
                 if(true){
+                    //disregard please
+//                    LobbyGUI l = new LobbyGUI(event);
                     GameBoard game = new GameBoard();
                 }else{
                   Stage notFoundStage = new Stage();
