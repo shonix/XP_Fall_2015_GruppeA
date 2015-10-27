@@ -4,7 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ConnectionHandler {
-	ServerSocket socketListener = new ServerSocket(7778);
+	ServerSocket socketListener = new ServerSocket(7776);
 	public ConnectionHandler() throws Exception {
 		while (true) {
 			Socket userSocket = socketListener.accept();
