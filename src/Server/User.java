@@ -1,7 +1,8 @@
+package Server;
+
 import java.net.Inet4Address;
 
 /**
- *
  * @author Markus
  */
 public class User
@@ -9,16 +10,16 @@ public class User
     private int ID;
     private String name;
     private Inet4Address IP;
-    
+
     private int totalGames;
     private int leaveCount;
     private float leavePercentage;
-    
+
     //Constructor for new user   
     public User(String name, Inet4Address IP)
     {
         this.name = name;
-        this.IP = IP;        
+        this.IP = IP;
     }
 
     public int getID()
@@ -49,26 +50,6 @@ public class User
     public void setIP(Inet4Address IP)
     {
         this.IP = IP;
-    }
-
-    public boolean isActive()
-    {
-        return active;
-    }
-
-    public void setActive(boolean active)
-    {
-        this.active = active;
-    }
-
-    public boolean isBan()
-    {
-        return ban;
-    }
-
-    public void setBan(boolean ban)
-    {
-        this.ban = ban;
     }
 
     public int getTotalGames()
