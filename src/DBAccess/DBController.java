@@ -29,10 +29,10 @@ public class DBController
      status.inaktiv(u.getID());
     }
 
-    //Change the score for a person. Gametpye, Win, lose or draw, user infomation (for user ID).
+    //Change the score for a person. Gametpye, Win, lose or draw, (win = w, lose = l, draw = d) user infomation (for user ID).
     public void gameStatChange(String type, char winLoseDraw, User u)
     {
-
+        gameStat.changeGame(type, winLoseDraw, u);
     }
 
     //If the person leaves the game, (Not forfit!)
