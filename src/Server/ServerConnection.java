@@ -7,30 +7,39 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 public class ServerConnection extends Thread {
-
 	Socket userSocket;
+	Boolean connected;
 	//Client user
 	public ServerConnection(Socket userSocket){//modtag også Client user
 		this.userSocket = userSocket;
+		Boolean connected = true;
 	}
 	
 	public void run(){
-		confirmClient(userSocket);
-	}
-	
-	public void confirmClient(Socket userSocket){
-		
 		try {
-		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(userSocket.getInputStream()));
-		while(true){
-		String msg = inFromClient.readLine();	
-		System.out.println(msg);
-		}
+			confirmClient(userSocket);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
+	}
+	
+	public void confirmClient(Socket userSocket) throws IOException{
+		System.out.println("A connection has been made, waiting for input");
+		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(userSocket.getInputStream()));
 		
+		
+		while(connected){
+			String request = inFromClient.readLine();
+			String[] requestParam = request.split(" ");
+			if(!requestParam[0].equals("GET")){
+				userSocket.close();
+				return;
+			}
+			if(true){
+				
+			}
+		}
 	}
 		
 }
