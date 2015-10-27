@@ -1,8 +1,8 @@
-insert into mydb.user(name, password)
+insert into mydb.user(name, password, IP)
 values 
-('Markus', 'Admin1'),
-('Peter', 'Admin2'),
-('Jannik', 'Admin3');
+('Markus', 'Admin1', '192.168.0.1'),
+('Peter', 'Admin2', '192.168.0.2'),
+('Jannik', 'Admin3', '192.168.0.3');
 insert into mydb.leaves
 values 
 (1, 4, 0, 9),
