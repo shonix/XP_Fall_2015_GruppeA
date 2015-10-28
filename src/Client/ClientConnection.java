@@ -7,42 +7,101 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
 public class ClientConnection {
 	
+	Socket clientSocket;
+	DataOutputStream outToServer;
+	boolean correct = false;
 	
+        char splitChar = (char) 007;
+        
 	public ClientConnection ()
 	{
 		
 	}
 	
-	public static void main(String args[]) throws IOException 
+//	public static void main(String args[]) throws IOException 
+//	{
+//		System.out.println("starting TCPClient main"); 
+//        String sentence; 
+//        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); 
+//        System.out.println("trying to connect"); 
+//        Socket clientSocket = new Socket("10.111.176.136", 7778); 
+//		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream()); 
+//        System.out.print("Please type your text: "); 
+//        
+//        while(clientSocket.isConnected()){
+//	        sentence = inFromUser.readLine(); 
+//	        outToServer.writeBytes(sentence + '\n'); 
+//        }
+//        clientSocket.close(); 
+//	}
+	
+	public boolean makeConnection(String username, String Password, String ip, int port) throws Exception
 	{
-		System.out.println("starting TCPClient main"); 
-        String sentence; 
-        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); 
-        System.out.println("trying to connect"); 
-        Socket clientSocket = new Socket("10.111.176.136", 7778); 
-		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream()); 
-        System.out.print("Please type your text: "); 
-        
-        while(clientSocket.isConnected()){
-	        sentence = inFromUser.readLine(); 
-	        outToServer.writeBytes(sentence + '\n'); 
-        }
-        clientSocket.close(); 
+		 setSocket(ip, port); 
+	outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+		 
+		 outToServer.writeBytes("LOGIN"+ splitChar + username + splitChar + Password + '\n' );
+		 outToServer.flush();
+		 
+		 if (clientSocket.isConnected())
+		 {
+			 correct = true;
+		 }
+		 else
+		 {
+			 correct = false;
+		 }
+		 
+		 return correct;
+		 
+		 
+	}
+	public void getTxt(String txt)
+	{
+		System.out.println(txt);
 	}
 	
-	public void makeConnection(String username, String Password, String ip, int port) throws Exception
+	
+	public void sendChatText(String txt) throws IOException
 	{
-		 Socket clientSocket = new Socket(ip, port); 
-		 DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream()); 
-		 
-		 outToServer.writeBytes(username + " " + Password );	 
-		 
-	}
-	public void sendChatText(String txt)
-	{
+		outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+		outToServer.writeBytes("CHAT" + splitChar + txt + '\n');
 		
+		outToServer.flush();
+		
+	}
+	
+	public void setSocket(String ip, int port) throws Exception
+	{
+		clientSocket = new Socket(ip, port);
+	}
+	
+	public Socket getSocket()
+	{
+		return clientSocket;
+	}
+	public boolean closeConnection()
+	{
+		try {
+			clientSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(clientSocket.isClosed())
+		{
+			correct = true;
+		}
+		else
+		{
+			correct = false;
+		}
+		
+		
+		return correct;
 	}
 	
 	

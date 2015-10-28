@@ -14,23 +14,38 @@ public class DBUser extends DBElement
 
     protected User logUserIn(String userName, String userPassword)
     {
-        ResultSet rs = null;
+        User u = null;
         try
         {
             createConnection();
-            String query = "SELECT name, active, ban FROM mydb.user JOIN mydb.status WHERE name LIKE ? and password LIKE ?";
+            String query = "SELECT ID, name, active, ban, totalGames, count " +
+                    "FROM mydb.user \n" +
+                    "left JOIN mydb.status on user.ID = status.userID\n" +
+                    "left join mydb.leaves on user.ID = leaves.userID\n" +
+                    "where user.name like ? and user.password like ?";
             System.out.println(userName);
             System.out.println(userPassword);
             preparedStatement = connect.prepareStatement(query);
             preparedStatement.setString(1, userName);
             preparedStatement.setString(2, userPassword);
-            rs = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             try
             {
-                if (rs.next() && rs.getBoolean("active") == true && rs.getBoolean("ban") != true )
+                if (resultSet.next() && resultSet.getBoolean("active") == true && resultSet.getBoolean("ban") != true)
                 {
-//                User u =
-//                return u;
+//                    public User(int ID, String name, int totalGames, int leaveCount, float leavePercentage)
+                    float percentage;
+                    int totalGames = resultSet.getInt("totalGames");
+                    int leaveCount = resultSet.getInt("count");
+                    if (leaveCount > 0)
+                    {
+                        percentage = ((float)leaveCount/(float)totalGames)*100;
+                    }
+                    else
+                    {
+                        percentage = 0;
+                    }
+                    u = new User(resultSet.getInt(1), userName, resultSet.getInt("totalGames"), resultSet.getInt("count"), percentage);
                 }
             }
             catch (SQLException e)
@@ -51,8 +66,7 @@ public class DBUser extends DBElement
             e.printStackTrace();
         }
         closeConnection();
-
-        return null;
+        return u;
     }
 
     protected ResultSet readAllUsers()
@@ -92,7 +106,7 @@ public class DBUser extends DBElement
         {
             createConnection();
             String query = "INSERT INTO mydb.user (name, password, IP) VALUES (?, ?, ?)";
-            preparedStatement = connect.prepareStatement(query , preparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement = connect.prepareStatement(query, preparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, u.getName());
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, u.getIP().getHostAddress());

@@ -9,18 +9,27 @@ import java.net.InetAddress;
 public class User
 {
     private int ID;
+
     private String name;
     private InetAddress IP;
-
     private int totalGames;
+
     private int leaveCount;
     private float leavePercentage;
-
-    //Constructor for new user   
+    //Constructor for new user
     public User(String name, InetAddress IP)
     {
         this.name = name;
         this.IP = IP;
+    }
+
+    public User(int ID, String name, int totalGames, int leaveCount, float leavePercentage)
+    {
+        this.ID = ID;
+        this.name = name;
+        this.totalGames = totalGames;
+        this.leaveCount = leaveCount;
+        this.leavePercentage = leavePercentage;
     }
 
     public int getID()
