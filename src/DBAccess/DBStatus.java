@@ -1,9 +1,5 @@
 package DBAccess;
 
-import Server.User;
-import com.sun.rowset.CachedRowSetImpl;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -124,7 +120,6 @@ public class DBStatus extends DBElement
             preparedStatement = connect.prepareStatement(query);
             preparedStatement.setInt(1, ID);
             resultSet = preparedStatement.executeQuery();
-//            System.out.println(resultSet.getBoolean(1));
             if (resultSet.next()) active = resultSet.getBoolean(1);
         }
         catch (SQLException e)

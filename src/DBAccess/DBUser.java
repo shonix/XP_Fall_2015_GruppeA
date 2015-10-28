@@ -23,8 +23,7 @@ public class DBUser extends DBElement
                     "left JOIN mydb.status on user.ID = status.userID\n" +
                     "left join mydb.leaves on user.ID = leaves.userID\n" +
                     "where user.name like ? and user.password like ?";
-            System.out.println(userName);
-            System.out.println(userPassword);
+
             preparedStatement = connect.prepareStatement(query);
             preparedStatement.setString(1, userName);
             preparedStatement.setString(2, userPassword);

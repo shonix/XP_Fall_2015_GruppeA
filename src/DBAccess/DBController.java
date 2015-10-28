@@ -2,6 +2,8 @@ package DBAccess;
 
 import Server.User;
 
+import java.sql.ResultSet;
+
 /**
  * Created by Peter Jensen on 27-10-2015.
  */
@@ -26,17 +28,56 @@ public class DBController
         status.createStatus(u.getID());
     }
 
+    //Return all user names.
+    public ResultSet getAllUsers()
+    {
+        return user.readAllUsers();
+    }
+
     //Change the active status of the user, true -> false or false -> true
     public void deleteUser(int ID)
     {
         status.active(ID);
     }
 
-    //Change the score for a person. Gametpye, Win, lose or draw, (win = w, lose = l, draw = d) user infomation (for user ID).
-    //Not tested
-    public void gameStatChange(String type, char winLoseDraw, User u)
+    /*
+    Change the score for a person. Gametype, Win, lose or draw, (win = w, lose = l, draw = d) user infomation.
+    Add the game type to the users list if it doesn't exist.
+     */
+    public void gameStatChange(String type, char winLoseDraw, int ID)
     {
-        gameStat.changeGame(type, winLoseDraw, u);
+        gameStat.changeGame(type, winLoseDraw, ID);
+        leaves.addTotalGame(ID);
+    }
+
+    //Add 1 to leave count and 1 to totalgames, and also update percentage leave.
+    public void incLeave(int ID)
+    {
+        leaves.updateLeaves(ID);
+    }
+
+    //Return leave for one user. ID, count, percentage, totalgame.
+    public ResultSet getLeave(int ID)
+    {
+        return leaves.getLeave(ID);
+    }
+
+    /*
+    Return a resultset with data in the following order : ID, gameType, win, loss, draw, total. (only gameType is a string.)
+    For one game for one user.
+     */
+    public ResultSet getGameStat(String gameName, int ID)
+    {
+        return gameStat.readGameStat(gameName, ID);
+    }
+
+    /*
+    Return a resultset with data in the following order : ID, gameType, win, loss, draw, total. (only gameType is a string.)
+    for all games for that specific user.
+     */
+    public ResultSet getGamesStat(int ID)
+    {
+        return gameStat.readGamesStat(ID);
     }
 
     //Change the ban status of the user, true -> false or false -> true
