@@ -14,6 +14,8 @@ public class ClientConnection {
 	DataOutputStream outToServer;
 	boolean correct = false;
 	
+        char splitChar = (char) 007;
+        
 	public ClientConnection ()
 	{
 		
@@ -41,8 +43,7 @@ public class ClientConnection {
 		 setSocket(ip, port); 
 	outToServer = new DataOutputStream(getSocket().getOutputStream()); 
 		 
-		 outToServer.writeBytes(username + " " + Password );
-		 
+		 outToServer.writeBytes("LOGIN"+ splitChar + username + splitChar + Password + '\n' );
 		 outToServer.flush();
 		 
 		 if (clientSocket.isConnected())
@@ -58,10 +59,16 @@ public class ClientConnection {
 		 
 		 
 	}
+	public void getTxt(String txt)
+	{
+		System.out.println(txt);
+	}
+	
+	
 	public void sendChatText(String txt) throws IOException
 	{
 		outToServer = new DataOutputStream(getSocket().getOutputStream()); 
-		outToServer.writeBytes(txt);
+		outToServer.writeBytes("CHAT" + splitChar + txt + '\n');
 		
 		outToServer.flush();
 		
