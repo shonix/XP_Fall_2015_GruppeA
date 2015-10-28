@@ -41,6 +41,27 @@ public class DBStatus extends DBElement
 
     protected void inaktiv(int userID)
     {
-
+        try
+        {
+            createConnection();
+            String query = "UPDATE status SET ban = ? WHERE userID = ?";
+            preparedStatement = connect.prepareStatement(query);
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setInt(2, userID);
+            preparedStatement.execute();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        closeConnection();
     }
 }

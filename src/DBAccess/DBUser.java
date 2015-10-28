@@ -18,7 +18,7 @@ public class DBUser extends DBElement
         try
         {
             createConnection();
-            String query = "SELECT name, active, ban FROM mydb.user JOIN mydb.status WHERE name LIKE ? and password LIKE ?";
+            String query = "SELECT ID, name, active, ban, totalGames, count FROM mydb.user JOIN mydb.status JOIN mydb.leaves WHERE name LIKE ? and password LIKE ?";
             System.out.println(userName);
             System.out.println(userPassword);
             preparedStatement = connect.prepareStatement(query);
@@ -27,10 +27,24 @@ public class DBUser extends DBElement
             rs = preparedStatement.executeQuery();
             try
             {
-                if (rs.next() && rs.getBoolean("active") == true && rs.getBoolean("ban") != true )
+                if (rs.next() && rs.getBoolean("active") == true && rs.getBoolean("ban") != true)
                 {
-//                User u =
-//                return u;
+//                    public User(int ID, String name, int totalGames, int leaveCount, float leavePercentage)
+                    float percentage;
+                    int totalGames = rs.getInt("totalGame");
+                    int leaveCount = rs.getInt("count");
+                    if (leaveCount > 0)
+                    {
+                        percentage = ((float)leaveCount/(float)totalGames)*100;
+                        String tempPercentage = String.format("%.2f", percentage);
+                        percentage = Float.parseFloat(tempPercentage);
+                    }
+                    else
+                    {
+                        percentage = 0;
+                    }
+                    User u = new User(rs.getInt(1), userName, rs.getInt("totalGame"), rs.getInt("count"), percentage);
+                    return u;
                 }
             }
             catch (SQLException e)
@@ -49,8 +63,7 @@ public class DBUser extends DBElement
         catch (Exception e)
         {
             e.printStackTrace();
-        }
-        closeConnection();
+        } closeConnection();
 
         return null;
     }
@@ -92,7 +105,7 @@ public class DBUser extends DBElement
         {
             createConnection();
             String query = "INSERT INTO mydb.user (name, password, IP) VALUES (?, ?, ?)";
-            preparedStatement = connect.prepareStatement(query , preparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement = connect.prepareStatement(query, preparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, u.getName());
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, u.getIP().getHostAddress());

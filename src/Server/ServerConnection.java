@@ -1,6 +1,7 @@
 package Server;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -10,7 +11,7 @@ public class ServerConnection extends Thread {
 	Socket userSocket;
 	Boolean connected = true;
 	//Client user
-	public ServerConnection(Socket userSocket){//modtag også Client user
+	public ServerConnection(Socket userSocket, ConnectionHandler connectionHandler){//modtag også Client user
 		this.userSocket = userSocket;
 	}
 	
@@ -27,6 +28,7 @@ public class ServerConnection extends Thread {
 		String[] requestParam;
 		System.out.println("A connection has been made, waiting for input");
 		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(userSocket.getInputStream()));
+		DataOutputStream outToClient;	
 			while(connected){
 				System.out.println("waiting");
 				String request = inFromClient.readLine();
@@ -38,6 +40,11 @@ public class ServerConnection extends Thread {
 				}
 				else if(requestParam[0].equals("CHAT")){
 					System.out.println(requestParam[1]);
+					for(Socket userSockets : ConnectionHandler.allUsers){
+						outToClient = new DataOutputStream(userSockets.getOutputStream());
+						outToClient.writeBytes(requestParam[1]);
+						System.out.println(requestParam[1]);
+					}
 				}
 			}
 	}
