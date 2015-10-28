@@ -1,3 +1,7 @@
+delete from mydb.user;
+delete from mydb.status;
+delete from mydb.leaves;
+delete from mydb.gaeStat;
 insert into mydb.user(name, password, IP)
 values 
 ('Markus', 'Admin1', '192.168.0.1'),
