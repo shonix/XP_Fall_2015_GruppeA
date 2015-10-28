@@ -6,6 +6,8 @@
 package Gui;
 
 import Client.ClientConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 
@@ -75,11 +77,15 @@ public class GuiMain extends Application {
             
             ClientConnection connectToLogon = new ClientConnection();
             
-            connectionSuccess = connectToLogon.makeConnection(user.getText(), password.getText(), ipField.getText(), Integer.parseInt(portField.getText()));
+            try {
+                connectionSuccess = connectToLogon.makeConnection(user.getText(), password.getText(), ipField.getText(), Integer.parseInt(portField.getText()));
+            } catch (Exception ex) {
+                Logger.getLogger(GuiMain.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             if(connectionSuccess){
                 
-                LobbyGUI lobby = new LobbyGUI(event);
+                LobbyGUI lobby = new LobbyGUI(event, connectToLogon);
                 
                 primaryStage.close();
                 

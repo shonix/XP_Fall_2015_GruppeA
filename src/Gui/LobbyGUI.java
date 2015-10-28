@@ -7,6 +7,9 @@ package Gui;
 
 import Client.ClientConnection;
 import Server.User;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -52,7 +55,7 @@ public class LobbyGUI {
     TableView<Object> matchTable;
 
     // parameter object should be user! user used to get username to display
-    public LobbyGUI(User currentUser, ClientConnection currConnect) {
+    public LobbyGUI(Object currentUser, ClientConnection currConnect) {
         
         //Creates the connection with the ClientConnection
         currentConnection = currConnect;
@@ -134,9 +137,15 @@ public class LobbyGUI {
 
         typingField.setOnAction((ActionEvent chatEnter) -> {
             
-            currentConnection.sendChatText(typingField.getText());
-            System.out.println(typingField.getText());
-            typingField.clear();
+            try {
+                
+                currentConnection.sendChatText(typingField.getText());
+                System.out.println(typingField.getText());
+                typingField.clear();
+            
+            } catch (IOException ex) {
+                Logger.getLogger(LobbyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             
         });
