@@ -5,15 +5,17 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ConnectionHandler {
-	ServerSocket socketListener = new ServerSocket(7776);
+	ServerSocket socketListener = new ServerSocket(7779);
 	public static ArrayList<Socket> allUsers = new ArrayList<>();
+	int index = 0;
 	public ConnectionHandler() throws Exception {
 		while (true) {
 			Socket userSocket = socketListener.accept();
 			if (userSocket != null) {
 				System.out.println("Trying to connect");
-				ServerConnection conn = new ServerConnection(userSocket,this);
-				allUsers.add(userSocket);
+				ServerConnection conn = new ServerConnection(userSocket,this,index);
+				allUsers.add(index,userSocket);
+				index++;
 				System.out.println("Connection established");
 				conn.start();
 			}
