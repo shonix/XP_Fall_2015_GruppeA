@@ -32,12 +32,20 @@ public class ServerConnection extends Thread {
 			while(connected){
 				System.out.println("waiting");
 				String request = inFromClient.readLine();
-				requestParam = request.split(" ");
+				char splitter = (char)007;
+				String split = String.valueOf(splitter);
+				requestParam = request.split(split);
 				
 				
 				if(requestParam[0].equals("")){
 					System.out.println("Waiting for input");
 				}
+				
+				else if(requestParam[0].equals("LOGIN")){
+					System.out.println(requestParam[1]);
+					System.out.println(requestParam[2]);
+				}
+				
 				else if(requestParam[0].equals("CHAT")){
 					System.out.println(requestParam[1]);
 					for(Socket userSockets : ConnectionHandler.allUsers){
@@ -46,6 +54,7 @@ public class ServerConnection extends Thread {
 						System.out.println(requestParam[1]);
 					}
 				}
+				
 			}
 	}
 		
