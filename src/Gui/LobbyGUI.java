@@ -95,6 +95,8 @@ public class LobbyGUI {
         ticTacToeButton.setOnAction((ActionEvent event) -> {
 
             selectedGameVariable = 't';
+            
+            GameBoard testytest = new GameBoard(currentConnection);
 
             System.out.println(event.getSource() + " pressed");
         });
