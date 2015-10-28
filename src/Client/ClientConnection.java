@@ -66,7 +66,7 @@ public class ClientConnection {
 	public void sendChatText(String txt) throws IOException
 	{
 		outToServer = new DataOutputStream(getSocket().getOutputStream()); 
-		outToServer.writeBytes("CHAT" + txt + '\n');
+		outToServer.writeBytes("CHAT " + txt + '\n');
 		
 		outToServer.flush();
 		
