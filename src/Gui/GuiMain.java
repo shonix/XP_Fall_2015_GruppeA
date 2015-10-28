@@ -29,22 +29,43 @@ public class GuiMain extends Application {
         
         VBox logOnBox = new VBox(5);
 
+        //IP field and label
+        VBox ipBox = new VBox();
+        Label stringip = new Label("IP");
+        TextField ipField = new TextField();
+        ipBox.getChildren().add(stringip);
+        ipBox.getChildren().add(ipField);
+        
+        
+        //Port field and label
+        VBox portBox = new VBox();
+        Label stringPort = new Label("Port");
+        TextField portField = new TextField();
+        portBox.getChildren().add(stringPort);
+        portBox.getChildren().add(portField);
+        
+        //User field and label
         VBox userBox = new VBox();
         Label stringUser = new Label("User");
         TextField user = new TextField();
         userBox.getChildren().add(stringUser);
         userBox.getChildren().add(user);
         
+        //Password field and label
         VBox passwordBox = new VBox();
         Label stringPasswordBox = new Label("Password");
         PasswordField password = new PasswordField();
         passwordBox.getChildren().add(stringPasswordBox);
         passwordBox.getChildren().add(password);
         
+        
+        //adds fields and labels
+        logOnBox.getChildren().add(ipBox);
+        logOnBox.getChildren().add(portBox);
         logOnBox.getChildren().add(userBox);
         logOnBox.getChildren().add(passwordBox);
  
-        
+        //log on butotn
         Button logOn = new Button();
         logOn.setText("log on");
         logOnBox.getChildren().add(logOn);  
@@ -53,9 +74,11 @@ public class GuiMain extends Application {
             @Override
             public void handle(ActionEvent event) {
                 if(true){
-                    //disregard please
-//                    LobbyGUI l = new LobbyGUI(event);
-                    GameBoard game = new GameBoard();
+                    
+                    LobbyGUI lobby = new LobbyGUI(event);
+                    
+                    primaryStage.close();
+                    
                 }else{
                   Stage notFoundStage = new Stage();
                   notFoundStage.setTitle("Error");

@@ -1,6 +1,7 @@
 package Server;
 
 import java.net.Inet4Address;
+import java.net.InetAddress;
 
 /**
  * @author Markus
@@ -9,14 +10,14 @@ public class User
 {
     private int ID;
     private String name;
-    private Inet4Address IP;
+    private InetAddress IP;
 
     private int totalGames;
     private int leaveCount;
     private float leavePercentage;
 
     //Constructor for new user   
-    public User(String name, Inet4Address IP)
+    public User(String name, InetAddress IP)
     {
         this.name = name;
         this.IP = IP;
@@ -42,12 +43,12 @@ public class User
         this.name = name;
     }
 
-    public Inet4Address getIP()
+    public InetAddress getIP()
     {
         return IP;
     }
 
-    public void setIP(Inet4Address IP)
+    public void setIP(InetAddress IP)
     {
         this.IP = IP;
     }
