@@ -58,6 +58,12 @@ public class ClientConnection {
 		 
 		 
 	}
+	public void getTxt(String txt)
+	{
+		System.out.println(txt);
+	}
+	
+	
 	public void sendChatText(String txt) throws IOException
 	{
 		outToServer = new DataOutputStream(getSocket().getOutputStream()); 
