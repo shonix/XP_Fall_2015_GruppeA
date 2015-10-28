@@ -133,6 +133,9 @@ public class LobbyGUI {
         //Chat del i partyframe 
         TextArea partyTextArea = new TextArea();
         partyTextArea.setEditable(false);
+        
+        ChatNode.addChatList(partyTextArea);
+        
         ScrollPane partyTextAreaScroll = new ScrollPane(partyTextArea);
 
         typingField = new TextField();
