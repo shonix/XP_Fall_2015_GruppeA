@@ -5,8 +5,15 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class ClientConnection {
+	
+	
+	public ClientConnection ()
+	{
+		
+	}
 	
 	public static void main(String args[]) throws IOException 
 	{
@@ -24,6 +31,22 @@ public class ClientConnection {
         }
         clientSocket.close(); 
 	}
+	
+	public void makeConnection(String username, String Password, String ip, int port) throws Exception
+	{
+		 Socket clientSocket = new Socket(ip, port); 
+		 DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream()); 
+		 
+		 outToServer.writeBytes(username + " " + Password );	 
+		 
+	}
+	public void sendChatText(String txt)
+	{
+		
+	}
+	
+	
+	
 
 }
 
