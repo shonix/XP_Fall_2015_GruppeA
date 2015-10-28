@@ -105,11 +105,6 @@ public class GameBoard {
         
         
         
-//        leftBox.getChildren().add(new Button("Fisk1"));
-//        middleBox.getChildren().add(new Button("Fisk1"));
-//        rightBox.getChildren().add(new Button("Fisk1"));
-        
-        
         upperBox.getChildren().addAll(leftBox, middleBox, rightBox);
         
         //upperBox.getChildren().addAll(new Button("1"), new Button("2"), new Button("3"), new Button("4"), new Button("5"), new Button("6"), new Button("7"), new Button("8"), new Button("9"));
