@@ -1,7 +1,5 @@
 package DBAccess;
 
-import Server.User;
-
 import java.sql.SQLException;
 
 /**
@@ -14,7 +12,7 @@ public class DBStatus extends DBElement
         try
         {
             createConnection();
-            String query = "INSERT INTO mydb.leaves (userID) VALUES (?)";
+            String query = "INSERT INTO mydb.status (userID) VALUES (?)";
             preparedStatement = connect.prepareStatement(query);
             preparedStatement.setInt(1,ID);
             preparedStatement.execute();
@@ -36,18 +34,12 @@ public class DBStatus extends DBElement
 
     protected void ban(int userID)
     {
-
-    }
-
-    protected void inaktiv(int userID)
-    {
         try
         {
             createConnection();
-            String query = "UPDATE status SET ban = ? WHERE userID = ?";
+            String query = "UPDATE status SET ban = !ban WHERE userID = ?";
             preparedStatement = connect.prepareStatement(query);
-            preparedStatement.setBoolean(1, true);
-            preparedStatement.setInt(2, userID);
+            preparedStatement.setInt(1, userID);
             preparedStatement.execute();
         }
         catch (SQLException e)
@@ -63,5 +55,86 @@ public class DBStatus extends DBElement
             e.printStackTrace();
         }
         closeConnection();
+    }
+
+    protected void active(int userID)
+    {
+        try
+        {
+            createConnection();
+            String query = "UPDATE status SET active = !active WHERE userID = ?";
+            preparedStatement = connect.prepareStatement(query);
+            preparedStatement.setInt(1, userID);
+            preparedStatement.execute();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        closeConnection();
+    }
+
+    public boolean isBan(int ID)
+    {
+        Boolean ban = true;
+        try
+        {
+            createConnection();
+            String query = "SELECT ban FROM mydb.status where userID = ?";
+            preparedStatement = connect.prepareStatement(query);
+            preparedStatement.setInt(1, ID);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()) ban = resultSet.getBoolean(1);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        closeConnection();
+        return ban;
+    }
+
+    public boolean isActive(int ID)
+    {
+        Boolean active = false;
+        try
+        {
+            createConnection();
+            String query = "SELECT active FROM mydb.status where userID = ?";
+            preparedStatement = connect.prepareStatement(query);
+            preparedStatement.setInt(1, ID);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) active = resultSet.getBoolean(1);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        closeConnection();
+        return active;
     }
 }

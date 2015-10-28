@@ -8,11 +8,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 
-public class ClientConnection {
+public class ClientConnection extends Thread{
 	
 	Socket clientSocket;
 	DataOutputStream outToServer;
 	boolean correct = false;
+	BufferedReader in;
 	
         char splitChar = (char) 007;
         
@@ -21,34 +22,49 @@ public class ClientConnection {
 		
 	}
 	
-//	public static void main(String args[]) throws IOException 
-//	{
-//		System.out.println("starting TCPClient main"); 
-//        String sentence; 
-//        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); 
-//        System.out.println("trying to connect"); 
-//        Socket clientSocket = new Socket("10.111.176.136", 7778); 
-//		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream()); 
-//        System.out.print("Please type your text: "); 
-//        
-//        while(clientSocket.isConnected()){
-//	        sentence = inFromUser.readLine(); 
-//	        outToServer.writeBytes(sentence + '\n'); 
-//        }
-//        clientSocket.close(); 
-//	}
+	public void run() {
+		
+		try {
+		    Thread.sleep(500);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		
+		if(getSocket().isClosed())
+		{
+			this.interrupt();
+		}
+		
+		
+		while(this.isAlive())
+		{
+			try {
+				getTxt();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+	}
+	
+
 	
 	public boolean makeConnection(String username, String Password, String ip, int port) throws Exception
 	{
 		 setSocket(ip, port); 
-	outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+		 outToServer = new DataOutputStream(getSocket().getOutputStream()); 
 		 
 		 outToServer.writeBytes("LOGIN"+ splitChar + username + splitChar + Password + '\n' );
 		 outToServer.flush();
 		 
-		 if (clientSocket.isConnected())
+		 
+		 
+		 if (getSocket().isConnected())
 		 {
+			 this.start();
 			 correct = true;
+			 System.out.println(correct);
 		 }
 		 else
 		 {
@@ -59,9 +75,24 @@ public class ClientConnection {
 		 
 		 
 	}
-	public void getTxt(String txt)
+	public void getTxt() throws Exception
 	{
-		System.out.println(txt);
+	
+		String txt;
+	
+		 in = new BufferedReader(new InputStreamReader(getSocket().getInputStream()));
+		
+		 while (in != null)
+		 {	
+			
+			txt = in.readLine().toString();
+			 System.out.println( txt);
+			 txt = null;
+			 
+		 }
+		 
+		 
+	
 	}
 	
 	
@@ -85,8 +116,16 @@ public class ClientConnection {
 	}
 	public boolean closeConnection()
 	{
+		
+		
+		
 		try {
+			outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+			
+			outToServer.writeBytes("EXIT" + '\n');
+			
 			clientSocket.close();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,6 +133,7 @@ public class ClientConnection {
 		if(clientSocket.isClosed())
 		{
 			correct = true;
+			System.out.println(correct);
 		}
 		else
 		{
