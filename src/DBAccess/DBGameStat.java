@@ -1,6 +1,7 @@
 package DBAccess;
 
 import Server.User;
+import com.sun.rowset.CachedRowSetImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,28 +14,28 @@ public class DBGameStat extends DBElement
 {
     protected void changeGame(String gameType, char winLoseDraw, User u)
     {
-        String type = "";
+        String stat;
         try
         {
             switch (winLoseDraw)
             {
                 case 'w':
-                    type = "win";
+                    stat = "win";
                     break;
                 case 'l':
-                    type = "loss";
+                    stat = "loss";
                     break;
                 case 'd':
-                    type = "draw";
+                    stat = "draw";
                     break;
                 default:
                     return;
             }
             createConnection();
-            String query = "UPDATE leaves SET " + type + " = " + type + " + 1 WHERE ID = " + u.getID() ;
+            String query = "UPDATE gameStat SET " + stat + " = " + stat + " + 1, total = total + 1 WHERE userID = ? and gameType = ?";
             preparedStatement = connect.prepareStatement(query);
-
-
+            preparedStatement.setInt(1, u.getID());
+            preparedStatement.setString(2, gameType);
             preparedStatement.execute();
         }
         catch (SQLException e)
@@ -54,11 +55,13 @@ public class DBGameStat extends DBElement
 
     protected ResultSet readGameStat(String gameName, int ID)
     {
-        ResultSet rs = null;
+        CachedRowSetImpl crs = null;
         try
         {
             createConnection();
-            rs = preparedStatement.executeQuery("SELECT * FROM mydb.gameStat where userID = " + ID + " and gameType = " + gameName);// min sql Select.
+            resultSet = preparedStatement.executeQuery("SELECT name FROM mydb.gameStat");// min sql Select.
+            crs = new CachedRowSetImpl();
+            crs.populate(resultSet);
         }
         catch (SQLException e)
         {
@@ -75,6 +78,6 @@ public class DBGameStat extends DBElement
 
 
         closeConnection();
-        return rs;
+        return crs;
     }
 }

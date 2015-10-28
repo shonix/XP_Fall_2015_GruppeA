@@ -23,12 +23,13 @@ public class DBController
     {
         user.createUser(u, password);
         leaves.createLeave(u.getID());
+        status.createStatus(u.getID());
     }
 
-    //Not tested!
-    public void deleteUser(User u)
+    //Change the active status of the user, true -> false or false -> true
+    public void deleteUser(int ID)
     {
-        status.inaktiv(u.getID());
+        status.active(ID);
     }
 
     //Change the score for a person. Gametpye, Win, lose or draw, (win = w, lose = l, draw = d) user infomation (for user ID).
@@ -38,12 +39,21 @@ public class DBController
         gameStat.changeGame(type, winLoseDraw, u);
     }
 
-    //If the person leaves the game, (Not forfit!)
-    //Not tested
-    public void banUser(User u)
+    //Change the ban status of the user, true -> false or false -> true
+    public void banUser(int ID)
     {
-        status.ban(u.getID());
+        status.ban(ID);
     }
 
-//    public void
+    //Return if the user is banned.
+    public boolean isBan(int ID)
+    {
+        return status.isBan(ID);
+    }
+
+    //Return if the user is active.
+    public boolean isActive(int ID)
+    {
+        return status.isActive(ID);
+    }
 }
