@@ -43,10 +43,11 @@ public class GameBoard {
         HBox upperBox = new HBox();
         upperBox.setStyle("-fx-background-color: #336699;");
         
-        GridPane layout = new GridPane();
+        GridPane ticTacLayout = new GridPane();
+        
         
         VBox leftBox = new VBox();
-        VBox middleBox = new VBox(layout);
+        VBox middleBox = new VBox(ticTacLayout);
         VBox rightBox = new VBox();
         
         leftBox.setStyle("-fx-background-color: #331010;");
@@ -58,17 +59,50 @@ public class GameBoard {
         int prefWidth = 200;
         int prefHeight = 200;
         
+        int ticTacButtonHeight = prefWidth / 3; 
+        int ticTacButtonWidth = prefHeight / 3; 
+        
+        
+        //TicTac Buttons
+        Button TL = new Button();
+        Button TM = new Button();
+        Button TR = new Button();
+        Button CL = new Button();
+        Button CM = new Button();
+        Button CR = new Button();
+        Button BL = new Button();
+        Button BM = new Button();
+        Button BR = new Button();
+        
+        TL.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
+        TM.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
+        TR.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
+        CL.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
+        CM.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
+        CR.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
+        BL.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
+        BM.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
+        BR.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
+        
+        
+        //Adding TicTacButtons
+        ticTacLayout.add(TL, 0, 0);
+        ticTacLayout.add(TM, 1, 0);
+        ticTacLayout.add(TR, 2, 0);
+        ticTacLayout.add(CL, 0, 1);
+        ticTacLayout.add(CM, 1, 1);
+        ticTacLayout.add(CR, 2, 1);
+        ticTacLayout.add(BL, 0, 2);
+        ticTacLayout.add(BM, 1, 2);
+        ticTacLayout.add(BR, 2, 2);
+        
+        
         
         leftBox.setPrefSize(prefWidth, prefHeight);
         middleBox.setPrefSize(prefWidth, prefHeight);
         rightBox.setPrefSize(prefWidth, prefHeight);
         
         
-        
-        
-//        leftBox.getChildren().add(new Button("Fisk1"));
-//        middleBox.getChildren().add(new Button("Fisk1"));
-//        rightBox.getChildren().add(new Button("Fisk1"));
         
         
         upperBox.getChildren().addAll(leftBox, middleBox, rightBox);
@@ -82,6 +116,8 @@ public class GameBoard {
         ScrollPane chatTextAreaScroll = new ScrollPane(chatTextArea);
         gameBox.getChildren().add(chatTextAreaScroll);
         
+        
+        ChatNode.addChatList(chatTextArea);
         
         
         TextField chat = new TextField();

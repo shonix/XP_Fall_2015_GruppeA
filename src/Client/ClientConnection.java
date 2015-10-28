@@ -125,6 +125,7 @@ public class ClientConnection extends Thread{
 			outToServer.writeBytes("EXIT" + '\n');
 			
 			clientSocket.close();
+			this.interrupt();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
