@@ -8,17 +8,35 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 
-public class ClientConnection {
-	
+public class ClientConnection extends Thread{
+	Thread read;
 	Socket clientSocket;
 	DataOutputStream outToServer;
 	boolean correct = false;
+	BufferedReader in;
 	
         char splitChar = (char) 007;
         
 	public ClientConnection ()
 	{
 		
+	}
+	
+	public void run() {
+		
+		read = new Thread();
+		
+		read.start();
+		while(read.isAlive())
+		{
+			try {
+				getTxt();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
 	}
 	
 //	public static void main(String args[]) throws IOException 
@@ -59,9 +77,18 @@ public class ClientConnection {
 		 
 		 
 	}
-	public void getTxt(String txt)
+	public void getTxt() throws Exception
 	{
-		System.out.println(txt);
+		String txt;
+		 in = new BufferedReader(new InputStreamReader(getSocket().getInputStream()));
+		 
+		 if (in.readLine() != null)
+		 {	
+			txt =  in.readLine();
+			 System.out.println(txt);
+		 }
+		 
+	
 	}
 	
 	
