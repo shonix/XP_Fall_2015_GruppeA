@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import DBAccess.DBController;
+
 public class ServerConnection extends Thread {
 	Socket userSocket;
 	ConnectionHandler connectionHandler;
@@ -30,6 +32,9 @@ public class ServerConnection extends Thread {
 	}
 	
 	public void confirmClient(Socket userSocket) throws IOException{
+		String username;
+		String tmpPass;
+		User client = null;
 		String[] requestParam;
 		System.out.println("A connection has been made, waiting for input");
 		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(userSocket.getInputStream()));
@@ -47,11 +52,15 @@ public class ServerConnection extends Thread {
 				}
 				
 				else if(requestParam[0].equals("LOGIN")){
+					username = requestParam[1];
+					tmpPass = requestParam[2];
 					System.out.println(requestParam[1]);
 					System.out.println(requestParam[2]);
+					client = ConnectionHandler.dbController.login(username, tmpPass);
 				}
-				
-				else if(requestParam[0].equals("CHAT")){
+				if(client!=null){
+
+				if(requestParam[0].equals("CHAT")){
 					System.out.println("recieved " +requestParam[1]);
 					for(Socket userSockets : ConnectionHandler.allUsers){
 						outToClient = new DataOutputStream(userSockets.getOutputStream());
@@ -61,6 +70,10 @@ public class ServerConnection extends Thread {
 				}
 				else if(requestParam[0].equals("EXIT")){
 					ConnectionHandler.allUsers.remove(index);
+				}
+				}
+				else{
+					System.out.println("Invalid user");
 				}
 				
 			}

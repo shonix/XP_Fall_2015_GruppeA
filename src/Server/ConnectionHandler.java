@@ -4,9 +4,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import DBAccess.DBController;
+
 public class ConnectionHandler {
 	ServerSocket socketListener = new ServerSocket(7779);
-	public static ArrayList<Socket> allUsers = new ArrayList<>();
+	protected static DBController dbController = new DBController();
+	protected static ArrayList<Socket> allUsers = new ArrayList<>();
 	int index = 0;
 	public ConnectionHandler() throws Exception {
 		while (true) {
