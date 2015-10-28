@@ -18,25 +18,29 @@ public class DBController
         return user.logUserIn(userName, userPassword);
     }
 
+    //Works add a new user to the DB.
     public void addUser(User u, String password)
     {
         user.createUser(u, password);
         leaves.createLeave(u.getID());
     }
 
+    //Not tested!
     public void deleteUser(User u)
     {
-     status.inaktiv(u.getID());
+        status.inaktiv(u.getID());
     }
 
     //Change the score for a person. Gametpye, Win, lose or draw, (win = w, lose = l, draw = d) user infomation (for user ID).
+    //Not tested
     public void gameStatChange(String type, char winLoseDraw, User u)
     {
         gameStat.changeGame(type, winLoseDraw, u);
     }
 
     //If the person leaves the game, (Not forfit!)
-    public void leave(User u)
+    //Not tested
+    public void banUser(User u)
     {
         status.ban(u.getID());
     }
