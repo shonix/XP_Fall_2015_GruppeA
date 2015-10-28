@@ -41,8 +41,7 @@ public class ClientConnection {
 		 setSocket(ip, port); 
 	outToServer = new DataOutputStream(getSocket().getOutputStream()); 
 		 
-		 outToServer.writeBytes(username + " " + Password );
-		 
+		 outToServer.writeBytes("LOGIN " + username + " " + Password + '\n' );
 		 outToServer.flush();
 		 
 		 if (clientSocket.isConnected())
@@ -67,7 +66,7 @@ public class ClientConnection {
 	public void sendChatText(String txt) throws IOException
 	{
 		outToServer = new DataOutputStream(getSocket().getOutputStream()); 
-		outToServer.writeBytes(txt);
+		outToServer.writeBytes("CHAT" + txt + '\n');
 		
 		outToServer.flush();
 		
