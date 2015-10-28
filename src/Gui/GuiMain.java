@@ -5,9 +5,9 @@
  */
 package Gui;
 
+import Client.ClientConnection;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -69,28 +69,29 @@ public class GuiMain extends Application {
         Button logOn = new Button();
         logOn.setText("log on");
         logOnBox.getChildren().add(logOn);  
-        logOn.setOnAction(new EventHandler<ActionEvent>() {
+        logOn.setOnAction((ActionEvent event) -> {
             
-            @Override
-            public void handle(ActionEvent event) {
-                if(true){
-                    
-                    LobbyGUI lobby = new LobbyGUI(event);
-                    
-                    primaryStage.close();
-                    
-                }else{
-                  Stage notFoundStage = new Stage();
-                  notFoundStage.setTitle("Error");
-                  Label errorMessage = new Label("Error");
-                  HBox errorBox = new HBox();
-                  errorBox.getChildren().add(errorMessage);
-                  Scene notFoundScrene = new Scene(errorBox, 125, 100);
-                  notFoundStage.setScene(notFoundScrene);
-                  notFoundStage.show();
-                }
+            boolean connectionSuccess = false;
+            
+            ClientConnection connectToLogon = new ClientConnection();
+            
+            connectionSuccess = connectToLogon.makeConnection(user.getText(), password.getText(), ipField.getText(), Integer.parseInt(portField.getText()));
+            
+            if(connectionSuccess){
                 
-
+                LobbyGUI lobby = new LobbyGUI(event);
+                
+                primaryStage.close();
+                
+            }else{
+                Stage notFoundStage = new Stage();
+                notFoundStage.setTitle("Error");
+                Label errorMessage = new Label("Error");
+                HBox errorBox = new HBox();
+                errorBox.getChildren().add(errorMessage);
+                Scene notFoundScrene = new Scene(errorBox, 125, 100);
+                notFoundStage.setScene(notFoundScrene);
+                notFoundStage.show();
             }
         });
         
