@@ -58,7 +58,7 @@ public class ClientConnection extends Thread{
 		 setUsername(username);
 		 outToServer = new DataOutputStream(getSocket().getOutputStream()); 
 		 
-		 outToServer.writeBytes("LOGIN"+ splitChar + username + splitChar + Password + '\n' );
+		 outToServer.writeBytes("LOGIN"+ splitChar + getUsername() + splitChar + Password + '\n' );
 		 outToServer.flush();
 		 
 		 
