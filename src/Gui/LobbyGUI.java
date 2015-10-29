@@ -6,10 +6,7 @@
 package Gui;
 
 import Client.ClientConnection;
-import Server.User;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -44,6 +41,7 @@ public class LobbyGUI {
     Button gamesButton;
     Button partyButton;
     Button historyButton;
+    Button logOutButton;
 
     VBox subMenuGame;
     char selectedGameVariable = '0';
@@ -71,10 +69,7 @@ public class LobbyGUI {
 
         lobbyScene = new Scene(mainBox, lobbySceneWidth, lobbySceneHeight);
 
-        //topmenu (maybe move to topMenuBoxCreate() ???
-        topMenuBox.setSpacing(50);
-        topMenuBox.setPrefSize(lobbySceneWidth / 2, lobbySceneHeight / 2);
-        topMenuBox.setAlignment(Pos.CENTER);
+        
 
         //Stage
         lobbyStage = new Stage();
@@ -206,11 +201,27 @@ public class LobbyGUI {
             changeSubMenu(event);
         });
 
+        //LogOutbutton
+        logOutButton = new Button("Exit");
+
+        logOutButton.setOnAction((ActionEvent event) -> {
+            currentConnection.closeConnection();
+            lobbyStage.close();
+            System.exit(0);
+            
+        });
+        
+        //topmenu settings
+        topMenuBox.setSpacing(50);
+        topMenuBox.setPrefSize(lobbySceneWidth / 2, lobbySceneHeight / 2);
+        topMenuBox.setAlignment(Pos.CENTER);
+        
         //Add nodes to submenu
         topMenuBox.getChildren().add(nameDisplay);
         topMenuBox.getChildren().add(gamesButton);
         topMenuBox.getChildren().add(partyButton);
         topMenuBox.getChildren().add(historyButton);
+        topMenuBox.getChildren().add(logOutButton);
 
     }
 
