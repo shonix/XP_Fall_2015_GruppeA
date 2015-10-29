@@ -16,7 +16,7 @@ public class ClientConnection extends Thread{
 	DataOutputStream outToServer;
 	boolean correct = false;
 	BufferedReader in;
-	
+	String username;
         char splitChar = (char) 007;
         
 	public ClientConnection ()
@@ -76,6 +76,21 @@ public class ClientConnection extends Thread{
 		 return correct;
 		 
 		 
+	}
+	public void requestParty(String oppent)
+	{
+		try {
+		outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+		
+			outToServer.writeBytes("PARTY" + splitChar + oppent + getUsername() + '\n');
+		
+		
+		outToServer.flush();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void getTxt() throws Exception
 	{
@@ -162,6 +177,14 @@ public class ClientConnection extends Thread{
 		
 		
 		return correct;
+	}
+	public void setUsername(String userName)
+	{
+		username = userName;
+	}
+	public String getUsername()
+	{
+		return username;
 	}
 	
 	
