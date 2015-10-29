@@ -88,8 +88,18 @@ public class ClientConnection extends Thread{
 		 {	
 			
 			txt = in.readLine().toString();
-			 ChatNode.updateChats("claus", txt);
-			 System.out.println("tissemand" + txt);
+			
+			String split = String.valueOf(splitChar);
+			
+			String[] parts = txt.split(split);
+			String Chat = parts[0]; // 004
+			String Message = parts[1]; // 034556
+			String userName = parts[2]; // 004
+			
+			System.out.println(Message);
+			System.out.println(userName);
+			 ChatNode.updateChats(userName, Message);
+			 
 			 
 		 }
 		 
