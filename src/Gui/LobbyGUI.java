@@ -149,7 +149,7 @@ public class LobbyGUI {
                 typingField.clear();
             
             } catch (IOException ex) {
-                Logger.getLogger(LobbyGUI.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("sendChatText() fail");
             }
             
             

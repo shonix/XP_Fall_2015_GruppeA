@@ -31,7 +31,7 @@ public class ChatNode {
     public static void updateChats(String userTexting, String message){
         
         for(TextArea chat : chatList){
-            chat.appendText(userTexting + ": " + message);
+            chat.appendText(userTexting + ": " + message + '\n');
         }
         
     }
