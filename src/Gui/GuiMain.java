@@ -117,7 +117,7 @@ public class GuiMain extends Application {
         });
         
       
-        Scene scene = new Scene(logOnBox, 300, 250);
+        Scene scene = new Scene(logOnBox);
         primaryStage.setTitle("log on");
         primaryStage.setScene(scene);
         primaryStage.show();
