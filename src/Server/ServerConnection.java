@@ -11,19 +11,14 @@ import DBAccess.DBController;
 
 public class ServerConnection extends Thread {
 	private Socket userSocket;
-	private ConnectionHandler connectionHandler;
 	private Boolean connected = true;
 	private ClientHandler client;
-	private int index;
+	private User user = null;
 	
 	
 
 	// Client user
-	public ServerConnection(ClientHandler client,
-			ConnectionHandler connectionHandler, int index) {// modtag også
-																// Client user
-		this.connectionHandler = connectionHandler;
-		this.index = index;
+	public ServerConnection(ClientHandler client,ConnectionHandler connectionHandler) {// modtag også// Client user
 		this.userSocket = client.getSocket();
 		this.client = client;
 	}
@@ -38,8 +33,6 @@ public class ServerConnection extends Thread {
 	}
 
 	public void confirmClient(Socket userSocket) throws IOException {
-
-		User user = null;
 		String[] requestParam;
 		System.out.println("A connection has been made, waiting for input");
 		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(
@@ -49,7 +42,7 @@ public class ServerConnection extends Thread {
 		
 		while (connected) {
 			String username = null; 
-			String tmpPass = null;  
+			String password = null;  
 			System.out.println("waiting");
 			String request = inFromClient.readLine();
 			char splitter = (char) 007;
@@ -61,14 +54,7 @@ public class ServerConnection extends Thread {
 			}
 
 			else if (requestParam[0].equals("LOGIN")) {
-				username = requestParam[1];
-				tmpPass = requestParam[2];
-				System.out.println(requestParam[1]);
-				System.out.println(requestParam[2]);
-				System.out.println(client.getUsername());
-				client.setUsername(username);
-				user = ConnectionHandler.dbController.login(username, tmpPass);
-				
+				login(requestParam[1],requestParam[2]);
 			}
 			if (user != null) {
 
@@ -94,5 +80,13 @@ public class ServerConnection extends Thread {
 				System.out.println("Invalid user");
 			}
 		}
+	}
+	public void login(String username, String password){
+		System.out.println(username);
+		System.out.println(password);
+		System.out.println(client.getUsername());
+		client.setUsername(username);
+		user = ConnectionHandler.dbController.login(username, password);
+		
 	}
 }
