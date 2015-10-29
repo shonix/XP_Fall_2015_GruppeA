@@ -7,17 +7,18 @@ import java.util.ArrayList;
 import DBAccess.DBController;
 
 public class ConnectionHandler {
-	ServerSocket socketListener = new ServerSocket(7779);
+	ServerSocket socketListener = new ServerSocket(7777);
 	protected static DBController dbController = new DBController();
-	protected static ArrayList<Socket> allUsers = new ArrayList<>();
+	protected static ArrayList<ClientHandler> allUsers = new ArrayList<>();
 	int index = 0;
 	public ConnectionHandler() throws Exception {
 		while (true) {
 			Socket userSocket = socketListener.accept();
 			if (userSocket != null) {
 				System.out.println("Trying to connect");
-				ServerConnection conn = new ServerConnection(userSocket,this,index);
-				allUsers.add(index,userSocket);
+				ClientHandler client = new ClientHandler(userSocket);
+				allUsers.add(client);
+				ServerConnection conn = new ServerConnection(client,this,index);
 				index++;
 				System.out.println("Connection established");
 				conn.start();
