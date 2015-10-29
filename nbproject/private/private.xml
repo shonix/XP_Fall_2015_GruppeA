@@ -3,17 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/BlottoG/Documents/portfolio/KEA/3.%20Semester/ScrumProject/XP_Fall_2015_GruppeA/src/Gui/LobbyGUI.java</file>
-            <file>file:/C:/Users/BlottoG/Documents/portfolio/KEA/3.%20Semester/ScrumProject/XP_Fall_2015_GruppeA/src/Gui/GameBoard.java</file>
-            <file>file:/C:/Users/BlottoG/Documents/portfolio/KEA/3.%20Semester/ScrumProject/XP_Fall_2015_GruppeA/src/Gui/GuiMain.java</file>
-=======
-            <file>file:/C:/Users/Jernsax/Documents/GitHub/XP_Fall_2015_GruppeA/src/Gui/MainGui.java</file>
-            <file>file:/C:/Users/Jernsax/Documents/GitHub/XP_Fall_2015_GruppeA/src/Server/MainServer.java</file>
-            <file>file:/C:/Users/Jernsax/Documents/GitHub/XP_Fall_2015_GruppeA/src/Client/MainClient.java</file>
-            <file>file:/C:/Users/Jernsax/Documents/GitHub/XP_Fall_2015_GruppeA/src/xp_fall_2015_gruppea/GameBoard.java</file>
-            <file>file:/C:/Users/Jernsax/Documents/GitHub/XP_Fall_2015_GruppeA/src/xp_fall_2015_gruppea/GuiMain.java</file>
->>>>>>> origin/master
+            <file>file:/C:/Users/Markus/Documents/XP-Projekt/XP_Fall_2015_GruppeA/src/Gui/GuiMain.java</file>
+            <file>file:/C:/Users/Markus/Documents/XP-Projekt/XP_Fall_2015_GruppeA/src/DBAccess/DBGameStat.java</file>
+            <file>file:/C:/Users/Markus/Documents/XP-Projekt/XP_Fall_2015_GruppeA/src/DBAccess/DBUser.java</file>
+            <file>file:/C:/Users/Markus/Documents/XP-Projekt/XP_Fall_2015_GruppeA/src/DBAccess/DBController.java</file>
+            <file>file:/C:/Users/Markus/Documents/XP-Projekt/XP_Fall_2015_GruppeA/src/Client/ClientConnection.java</file>
         </group>
     </open-files>
 </project-private>
