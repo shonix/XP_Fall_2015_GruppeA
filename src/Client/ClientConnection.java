@@ -100,6 +100,12 @@ public class ClientConnection extends Thread{
 			System.out.println(userName);
 			 ChatNode.updateChats(userName, Message);
 			 
+			 if(Chat.equals("CONNCLOSE"))
+			 {
+				 clientSocket.close();
+					this.interrupt();
+			 }
+			 
 			 
 		 }
 		 
@@ -136,8 +142,8 @@ public class ClientConnection extends Thread{
 			
 			outToServer.writeBytes("EXIT" + '\n');
 			
-			clientSocket.close();
-			this.interrupt();
+			
+			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
