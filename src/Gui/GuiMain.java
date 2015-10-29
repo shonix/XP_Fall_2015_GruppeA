@@ -61,6 +61,12 @@ public class GuiMain extends Application {
         passwordBox.getChildren().add(password);
         
         
+        //Inserts standard field text
+        ipField.setText("10.111.176.104");
+        portField.setText("7777");
+        user.setText("peter");
+        password.setText("admin2");
+        
         //adds fields and labels
         logOnBox.getChildren().add(ipBox);
         logOnBox.getChildren().add(portBox);
@@ -95,7 +101,7 @@ public class GuiMain extends Application {
                 Label errorMessage = new Label("Error");
                 HBox errorBox = new HBox();
                 errorBox.getChildren().add(errorMessage);
-                Scene notFoundScrene = new Scene(errorBox, 125, 100);
+                Scene notFoundScrene = new Scene(errorBox, 200, 100);
                 notFoundStage.setScene(notFoundScrene);
                 notFoundStage.show();
             }
@@ -104,9 +110,9 @@ public class GuiMain extends Application {
         
         //Offline mode button
         Button offMode = new Button();
-        logOn.setText("OfflineMode");
+        offMode.setText("OfflineMode");
         logOnBox.getChildren().add(offMode);  
-        logOn.setOnAction((ActionEvent event) -> {
+        offMode.setOnAction((ActionEvent event) -> {
             GameBoard test = new GameBoard();
         });
         
