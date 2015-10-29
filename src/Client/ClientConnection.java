@@ -55,6 +55,7 @@ public class ClientConnection extends Thread{
 	public boolean makeConnection(String username, String Password, String ip, int port) throws Exception
 	{
 		 setSocket(ip, port); 
+		 setUsername(username);
 		 outToServer = new DataOutputStream(getSocket().getOutputStream()); 
 		 
 		 outToServer.writeBytes("LOGIN"+ splitChar + username + splitChar + Password + '\n' );
