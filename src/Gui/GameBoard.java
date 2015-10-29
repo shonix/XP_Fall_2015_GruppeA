@@ -153,7 +153,7 @@ public class GameBoard {
     }
     
     
-    //DENNE KONSTRUKTOR ER KUN TIL TEST, MEN DENS METODER ER DE NYESTE! SKRIV IKKE NOGEN STEDER UDEN AT SPØRGE EMIL!
+    //DENNE KONSTRUKTOR ER KUN TIL TEST, MEN DENS METODER ER DE NYESTE! SKRIV IKKE NOGEN STEDER UDEN AT SPØRGE HR. EMIL!
     public GameBoard(){
         
         
@@ -180,11 +180,14 @@ public class GameBoard {
         
 
         //Size
-        int prefWidth = 200;
-        int prefHeight = 200;
+        int prefWidthTicTac = 300;
+        int prefHeightTicTac = 300;
+        int prefWidthStandard = 200;
+        int prefHeightStandard = 200;
         
-        int ticTacButtonHeight = prefWidth / 3; 
-        int ticTacButtonWidth = prefHeight / 3; 
+        
+        int ticTacButtonHeight = prefWidthTicTac / 3; 
+        int ticTacButtonWidth = prefHeightTicTac / 3; 
         
         
         //TicTac Buttons
@@ -222,9 +225,19 @@ public class GameBoard {
         
         
         
-        leftBox.setPrefSize(prefWidth, prefHeight);
-        middleBox.setPrefSize(prefWidth, prefHeight);
-        rightBox.setPrefSize(prefWidth, prefHeight);
+        leftBox.setPrefSize(prefWidthStandard, prefHeightStandard);
+        middleBox.setPrefSize(prefWidthTicTac, prefHeightTicTac);
+        rightBox.setPrefSize(prefWidthStandard, prefHeightStandard);
+        
+        
+        //ButtonActions
+        TL.setOnAction(event -> {
+            System.out.println("Button pressed at " + TL.getParent());
+        });
+        BM.setOnAction(event -> {
+            System.out.println("Button pressed at " + BM.getParent());
+        });
+        
         
         
         

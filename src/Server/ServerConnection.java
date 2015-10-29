@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.mysql.fabric.xmlrpc.Client;
-
 import DBAccess.DBController;
 
 public class ServerConnection extends Thread {
