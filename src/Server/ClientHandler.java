@@ -4,7 +4,7 @@ import java.net.Socket;
 
 public class ClientHandler {
 	private Socket userSocket;
-	private String username;
+	private String username = "";
 	
 	public ClientHandler(Socket userSocket){
 		this.userSocket = userSocket;
