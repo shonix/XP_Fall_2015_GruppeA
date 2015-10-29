@@ -101,6 +101,15 @@ public class GuiMain extends Application {
             }
         });
         
+        
+        //Offline mode button
+        Button offMode = new Button();
+        logOn.setText("OfflineMode");
+        logOnBox.getChildren().add(offMode);  
+        logOn.setOnAction((ActionEvent event) -> {
+            GameBoard test = new GameBoard();
+        });
+        
       
         Scene scene = new Scene(logOnBox, 300, 250);
         primaryStage.setTitle("log on");
