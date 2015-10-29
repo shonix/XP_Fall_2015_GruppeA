@@ -1,4 +1,5 @@
 import java.util.regex.Pattern;
+
 /**
  *
  * @author Markus
@@ -40,17 +41,19 @@ public class InputCheck
         return valid;
     }
 
+    //must follow standard ip format eg. 192.168.1.1
     private static boolean checkIP(String input)
     {
         boolean valid = false;
         int length = input.length();
-        if (length <= 15 && length > 0)
+        if (length <= 15)
         {
             valid = patternIP.matcher(input).matches();
         }
         return valid;
     }
 
+    //must be 4 long and only contain numbers
     private static boolean checkPort(String input)
     {
         boolean valid = false;
@@ -61,33 +64,39 @@ public class InputCheck
         return valid;
     }
 
+    //must contain a letter and be 6-12 characters long, and must not contain special characters 
     private static boolean checkUser(String input)
     {
         boolean valid = false;
         int length = input.length();
-        if (length <= 12 && length > 6)
+        if (length <= 12 && length >= 6)
         {
             valid = patternUser.matcher(input).matches();
         }
         return valid;
     }
-
+    
+    //must contain both letters and numbers, must be 8-16 characters long an must not contain special characters
     private static boolean checkPassword(String input)
     {
         boolean valid = false;
         int length = input.length();
-        if (length <= 16 && length > 8)
+        if (length <= 16 && length >= 8)
         {
             valid = patternPassword.matcher(input).matches();
         }
         return valid;
     }
 
+    //must be longer than 0 characters
     private static boolean checkMessage(String input)
     {
         boolean valid = false;
         int length = input.length();
-        if(length > 0) valid = true;
+        if (length > 0)
+        {
+            valid = true;
+        }
         return valid;
     }
 }
