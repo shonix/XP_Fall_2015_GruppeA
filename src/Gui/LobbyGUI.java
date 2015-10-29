@@ -208,7 +208,7 @@ public class LobbyGUI {
         topMenuBox = new VBox();
 
         //Displayname
-        Label nameDisplay = new Label("user.Getname goes here!");
+        Label nameDisplay = new Label(currentConnection.getUsername());
 
         //Games button
         gamesButton = new Button("Games");
