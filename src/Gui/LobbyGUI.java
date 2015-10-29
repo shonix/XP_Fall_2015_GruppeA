@@ -51,6 +51,8 @@ public class LobbyGUI {
     char selectedGameVariable = '0';
 
     VBox subMenuParty;
+    TableView partyTable;
+    TextField partyTypeField;
     TextField typingField;
 
     VBox subMenuHistory;
@@ -128,13 +130,29 @@ public class LobbyGUI {
 
         subMenuParty = new VBox();
 
+        HBox inviteBox = new HBox();
+        
         //Invite stuff
+        
+        
         Button inviteButton = new Button("invite");
 
         inviteButton.setOnAction((ActionEvent event) -> {
             System.out.println(event.getSource() + " pressed");
         });
+        
+        partyTable = new TableView();
+        partyTable.setPrefHeight(lobbySceneHeight / 4);
+        //invite type field
+        partyTypeField = new TextField();
+        partyTypeField.setOnAction((ActionEvent partyEnter) -> {
+            
+        });
 
+        inviteBox.getChildren().add(partyTypeField);
+        inviteBox.getChildren().add(inviteButton);
+        
+        
         //Chat del i partyframe 
         TextArea partyTextArea = new TextArea();
         partyTextArea.setEditable(false);
@@ -162,8 +180,11 @@ public class LobbyGUI {
         //Size of subMenu
         subMenuParty.setPrefSize(lobbySceneWidth / 2, lobbySceneHeight / 2);
         subMenuParty.setAlignment(Pos.CENTER);
-
-        subMenuParty.getChildren().add(inviteButton);
+        subMenuParty.setSpacing(5);
+        
+        
+        subMenuParty.getChildren().add(partyTable);
+        subMenuParty.getChildren().add(inviteBox);
         subMenuParty.getChildren().add(partyTextAreaScroll);
         subMenuParty.getChildren().add(typingField);
 
