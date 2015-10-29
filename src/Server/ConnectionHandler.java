@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import DBAccess.DBController;
 
 public class ConnectionHandler {
-	ServerSocket socketListener = new ServerSocket(7777);
+	ServerSocket socketListener = new ServerSocket(7775);
 	protected static DBController dbController = new DBController();
 	protected static ArrayList<ClientHandler> allUsers = new ArrayList<>();
 	int index = 0;
