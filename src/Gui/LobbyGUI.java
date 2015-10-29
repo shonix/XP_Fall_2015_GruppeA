@@ -138,7 +138,8 @@ public class LobbyGUI {
         Button inviteButton = new Button("invite");
 
         inviteButton.setOnAction((ActionEvent event) -> {
-            System.out.println(event.getSource() + " pressed");
+            currentConnection.requestParty(partyTypeField.getText());
+            partyTypeField.clear();
         });
         
         partyTable = new TableView();
@@ -147,6 +148,9 @@ public class LobbyGUI {
         partyTypeField = new TextField();
         partyTypeField.setOnAction((ActionEvent partyEnter) -> {
             
+            currentConnection.requestParty(partyTypeField.getText());
+            partyTypeField.clear();
+        
         });
 
         inviteBox.getChildren().add(partyTypeField);
