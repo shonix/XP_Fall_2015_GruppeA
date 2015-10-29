@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -101,6 +102,7 @@ public class GuiMain extends Application {
                 Label errorMessage = new Label("Error");
                 HBox errorBox = new HBox();
                 errorBox.getChildren().add(errorMessage);
+                errorBox.setAlignment(Pos.CENTER);
                 Scene notFoundScrene = new Scene(errorBox, 200, 100);
                 notFoundStage.setScene(notFoundScrene);
                 notFoundStage.show();
