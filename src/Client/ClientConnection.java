@@ -89,6 +89,7 @@ public class ClientConnection extends Thread{
 			
 			txt = in.readLine().toString();
 			 ChatNode.updateChats("claus", txt);
+			 System.out.println("" + txt);
 			 
 		 }
 		 

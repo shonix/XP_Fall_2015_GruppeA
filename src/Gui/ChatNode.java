@@ -14,7 +14,7 @@ import javafx.scene.control.TextArea;
  */
 public class ChatNode {
     
-    private static ArrayList<TextArea> chatList;
+    private static ArrayList<TextArea> chatList = new ArrayList<>();
 
     public static ArrayList<TextArea> getChatList() {
         return chatList;
