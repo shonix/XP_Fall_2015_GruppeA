@@ -7,7 +7,10 @@ package Gui;
 
 import Client.ClientConnection;
 import java.io.IOException;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -28,7 +32,7 @@ public class LobbyGUI {
 
     //Fields
     ClientConnection currentConnection;
-    
+
     Stage lobbyStage;
 
     Scene lobbyScene;
@@ -54,10 +58,10 @@ public class LobbyGUI {
 
     // parameter object should be user! user used to get username to display
     public LobbyGUI(Object currentUser, ClientConnection currConnect) {
-        
+
         //Creates the connection with the ClientConnection
         currentConnection = currConnect;
-        
+
         //Creates different boxes
         topMenuBoxCreate();
 
@@ -69,14 +73,20 @@ public class LobbyGUI {
 
         lobbyScene = new Scene(mainBox, lobbySceneWidth, lobbySceneHeight);
 
-        
-
         //Stage
         lobbyStage = new Stage();
         lobbyStage.setTitle("Lobby");
         lobbyStage.setScene(lobbyScene);
         lobbyStage.setResizable(false);
         lobbyStage.show();
+
+        lobbyStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                currentConnection.closeConnection();
+                System.exit(0);
+            }
+        });
 
     }
 
@@ -90,7 +100,7 @@ public class LobbyGUI {
         ticTacToeButton.setOnAction((ActionEvent event) -> {
 
             selectedGameVariable = 't';
-            
+
             GameBoard testytest = new GameBoard(currentConnection);
 
             System.out.println(event.getSource() + " pressed");
@@ -128,26 +138,25 @@ public class LobbyGUI {
         //Chat del i partyframe 
         TextArea partyTextArea = new TextArea();
         partyTextArea.setEditable(false);
-        
+
         ChatNode.addChatList(partyTextArea);
-        
+
         ScrollPane partyTextAreaScroll = new ScrollPane(partyTextArea);
 
         typingField = new TextField();
 
         typingField.setOnAction((ActionEvent chatEnter) -> {
-            
+
             try {
-                
+
                 currentConnection.sendChatText(typingField.getText());
                 System.out.println(typingField.getText());
                 typingField.clear();
-            
+
             } catch (IOException ex) {
                 System.out.println("sendChatText() fail");
             }
-            
-            
+
         });
 
         //Size of subMenu
@@ -208,14 +217,14 @@ public class LobbyGUI {
             currentConnection.closeConnection();
             lobbyStage.close();
             System.exit(0);
-            
+
         });
-        
+
         //topmenu settings
         topMenuBox.setSpacing(50);
         topMenuBox.setPrefSize(lobbySceneWidth / 2, lobbySceneHeight / 2);
         topMenuBox.setAlignment(Pos.CENTER);
-        
+
         //Add nodes to submenu
         topMenuBox.getChildren().add(nameDisplay);
         topMenuBox.getChildren().add(gamesButton);
