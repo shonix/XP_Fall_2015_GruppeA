@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.mysql.fabric.xmlrpc.Client;
-
 import DBAccess.DBController;
 
 public class ServerConnection extends Thread {
@@ -17,6 +15,8 @@ public class ServerConnection extends Thread {
 	private Boolean connected = true;
 	private ClientHandler client;
 	private int index;
+	
+	
 
 	// Client user
 	public ServerConnection(ClientHandler client,
@@ -25,6 +25,7 @@ public class ServerConnection extends Thread {
 		this.connectionHandler = connectionHandler;
 		this.index = index;
 		this.userSocket = client.getSocket();
+		this.client = client;
 	}
 
 	public void run() {
@@ -37,15 +38,18 @@ public class ServerConnection extends Thread {
 	}
 
 	public void confirmClient(Socket userSocket) throws IOException {
-		String username = null;
-		String tmpPass = null;
+
 		User user = null;
 		String[] requestParam;
 		System.out.println("A connection has been made, waiting for input");
 		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(
 				userSocket.getInputStream()));
-		DataOutputStream outToClient;
+		DataOutputStream outToClient =  new DataOutputStream(client.getSocket()
+				.getOutputStream());;
+		
 		while (connected) {
+			String username = null; 
+			String tmpPass = null;  
 			System.out.println("waiting");
 			String request = inFromClient.readLine();
 			char splitter = (char) 007;
@@ -61,8 +65,10 @@ public class ServerConnection extends Thread {
 				tmpPass = requestParam[2];
 				System.out.println(requestParam[1]);
 				System.out.println(requestParam[2]);
-				user = ConnectionHandler.dbController.login(username, tmpPass);
+				System.out.println(client.getUsername());
 				client.setUsername(username);
+				user = ConnectionHandler.dbController.login(username, tmpPass);
+				
 			}
 			if (user != null) {
 
@@ -72,11 +78,17 @@ public class ServerConnection extends Thread {
 						outToClient = new DataOutputStream(clients.getSocket()
 								.getOutputStream());
 						outToClient.writeBytes("CHAT" + splitter
-								+ requestParam[1] + splitter + username + '\n');
+								+ requestParam[1] + splitter + client.getUsername() + '\n');
 						System.out.println("Sending " + requestParam[1]);
 					}
 				} else if (requestParam[0].equals("EXIT")) {
+					outToClient.writeBytes("CONNCLOSE");
+					client.getSocket().close();
+					user=null;
+					connected=false;
+					outToClient.close();
 					client.close();
+					
 				}
 			} else {
 				System.out.println("Invalid user");

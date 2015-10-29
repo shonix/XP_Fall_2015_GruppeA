@@ -16,7 +16,7 @@ public class ClientConnection extends Thread{
 	DataOutputStream outToServer;
 	boolean correct = false;
 	BufferedReader in;
-	
+	String username;
         char splitChar = (char) 007;
         
 	public ClientConnection ()
@@ -77,6 +77,21 @@ public class ClientConnection extends Thread{
 		 
 		 
 	}
+	public void requestParty(String oppent)
+	{
+		try {
+		outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+		
+			outToServer.writeBytes("PARTY" + splitChar + oppent + getUsername() + '\n');
+		
+		
+		outToServer.flush();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void getTxt() throws Exception
 	{
 	
@@ -88,8 +103,25 @@ public class ClientConnection extends Thread{
 		 {	
 			
 			txt = in.readLine().toString();
-			 ChatNode.updateChats("claus", txt);
-			 System.out.println("tissemand" + txt);
+			
+			String split = String.valueOf(splitChar);
+			
+			String[] parts = txt.split(split);
+			String Chat = parts[0]; // 004
+			String Message = parts[1]; // 034556
+			String userName = parts[2]; // 004
+			
+			System.out.println(Message);
+			System.out.println(userName);
+			 ChatNode.updateChats(userName, Message);
+			 
+			 if(Chat.equals("CONNCLOSE"))
+			 {
+				 
+					this.interrupt();
+					System.out.println("du er nu logget af");
+			 }
+			 
 			 
 		 }
 		 
@@ -126,8 +158,8 @@ public class ClientConnection extends Thread{
 			
 			outToServer.writeBytes("EXIT" + '\n');
 			
-			clientSocket.close();
-			this.interrupt();
+			
+			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -145,6 +177,14 @@ public class ClientConnection extends Thread{
 		
 		
 		return correct;
+	}
+	public void setUsername(String userName)
+	{
+		username = userName;
+	}
+	public String getUsername()
+	{
+		return username;
 	}
 	
 	

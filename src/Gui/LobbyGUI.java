@@ -6,11 +6,11 @@
 package Gui;
 
 import Client.ClientConnection;
-import Server.User;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -31,7 +32,7 @@ public class LobbyGUI {
 
     //Fields
     ClientConnection currentConnection;
-    
+
     Stage lobbyStage;
 
     Scene lobbyScene;
@@ -44,11 +45,14 @@ public class LobbyGUI {
     Button gamesButton;
     Button partyButton;
     Button historyButton;
+    Button logOutButton;
 
     VBox subMenuGame;
     char selectedGameVariable = '0';
 
     VBox subMenuParty;
+    TableView partyTable;
+    TextField partyTypeField;
     TextField typingField;
 
     VBox subMenuHistory;
@@ -56,10 +60,10 @@ public class LobbyGUI {
 
     // parameter object should be user! user used to get username to display
     public LobbyGUI(Object currentUser, ClientConnection currConnect) {
-        
+
         //Creates the connection with the ClientConnection
         currentConnection = currConnect;
-        
+
         //Creates different boxes
         topMenuBoxCreate();
 
@@ -71,17 +75,20 @@ public class LobbyGUI {
 
         lobbyScene = new Scene(mainBox, lobbySceneWidth, lobbySceneHeight);
 
-        //topmenu (maybe move to topMenuBoxCreate() ???
-        topMenuBox.setSpacing(50);
-        topMenuBox.setPrefSize(lobbySceneWidth / 2, lobbySceneHeight / 2);
-        topMenuBox.setAlignment(Pos.CENTER);
-
         //Stage
         lobbyStage = new Stage();
         lobbyStage.setTitle("Lobby");
         lobbyStage.setScene(lobbyScene);
         lobbyStage.setResizable(false);
         lobbyStage.show();
+
+        lobbyStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                currentConnection.closeConnection();
+                System.exit(0);
+            }
+        });
 
     }
 
@@ -95,7 +102,7 @@ public class LobbyGUI {
         ticTacToeButton.setOnAction((ActionEvent event) -> {
 
             selectedGameVariable = 't';
-            
+
             GameBoard testytest = new GameBoard(currentConnection);
 
             System.out.println(event.getSource() + " pressed");
@@ -123,43 +130,61 @@ public class LobbyGUI {
 
         subMenuParty = new VBox();
 
+        HBox inviteBox = new HBox();
+        
         //Invite stuff
+        
+        
         Button inviteButton = new Button("invite");
 
         inviteButton.setOnAction((ActionEvent event) -> {
             System.out.println(event.getSource() + " pressed");
         });
+        
+        partyTable = new TableView();
+        partyTable.setPrefHeight(lobbySceneHeight / 4);
+        //invite type field
+        partyTypeField = new TextField();
+        partyTypeField.setOnAction((ActionEvent partyEnter) -> {
+            
+        });
 
+        inviteBox.getChildren().add(partyTypeField);
+        inviteBox.getChildren().add(inviteButton);
+        
+        
         //Chat del i partyframe 
         TextArea partyTextArea = new TextArea();
         partyTextArea.setEditable(false);
-        
+
         ChatNode.addChatList(partyTextArea);
-        
+
         ScrollPane partyTextAreaScroll = new ScrollPane(partyTextArea);
 
         typingField = new TextField();
 
         typingField.setOnAction((ActionEvent chatEnter) -> {
-            
+
             try {
-                
+
                 currentConnection.sendChatText(typingField.getText());
                 System.out.println(typingField.getText());
                 typingField.clear();
-            
+
             } catch (IOException ex) {
                 System.out.println("sendChatText() fail");
             }
-            
-            
+
         });
 
         //Size of subMenu
         subMenuParty.setPrefSize(lobbySceneWidth / 2, lobbySceneHeight / 2);
         subMenuParty.setAlignment(Pos.CENTER);
-
-        subMenuParty.getChildren().add(inviteButton);
+        subMenuParty.setSpacing(5);
+        
+        
+        subMenuParty.getChildren().add(partyTable);
+        subMenuParty.getChildren().add(inviteBox);
         subMenuParty.getChildren().add(partyTextAreaScroll);
         subMenuParty.getChildren().add(typingField);
 
@@ -206,11 +231,27 @@ public class LobbyGUI {
             changeSubMenu(event);
         });
 
+        //LogOutbutton
+        logOutButton = new Button("Exit");
+
+        logOutButton.setOnAction((ActionEvent event) -> {
+            currentConnection.closeConnection();
+            lobbyStage.close();
+            System.exit(0);
+
+        });
+
+        //topmenu settings
+        topMenuBox.setSpacing(50);
+        topMenuBox.setPrefSize(lobbySceneWidth / 2, lobbySceneHeight / 2);
+        topMenuBox.setAlignment(Pos.CENTER);
+
         //Add nodes to submenu
         topMenuBox.getChildren().add(nameDisplay);
         topMenuBox.getChildren().add(gamesButton);
         topMenuBox.getChildren().add(partyButton);
         topMenuBox.getChildren().add(historyButton);
+        topMenuBox.getChildren().add(logOutButton);
 
     }
 
