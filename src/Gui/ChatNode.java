@@ -14,7 +14,7 @@ import javafx.scene.control.TextArea;
  */
 public class ChatNode {
     
-    private static ArrayList<TextArea> chatList;
+    private static ArrayList<TextArea> chatList = new ArrayList<>();
 
     public static ArrayList<TextArea> getChatList() {
         return chatList;
@@ -31,7 +31,7 @@ public class ChatNode {
     public static void updateChats(String userTexting, String message){
         
         for(TextArea chat : chatList){
-            chat.appendText(userTexting + ": " + message);
+            chat.appendText(userTexting + ": " + message + '\n');
         }
         
     }

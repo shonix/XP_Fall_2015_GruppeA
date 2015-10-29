@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import Gui.ChatNode;
+
 
 public class ClientConnection extends Thread{
 	
@@ -86,8 +88,8 @@ public class ClientConnection extends Thread{
 		 {	
 			
 			txt = in.readLine().toString();
-			 System.out.println( txt);
-			 txt = null;
+			 ChatNode.updateChats("claus", txt);
+			 System.out.println("tissemand" + txt);
 			 
 		 }
 		 
