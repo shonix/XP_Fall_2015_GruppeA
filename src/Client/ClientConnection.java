@@ -102,8 +102,9 @@ public class ClientConnection extends Thread{
 			 
 			 if(Chat.equals("CONNCLOSE"))
 			 {
-				 clientSocket.close();
+				 
 					this.interrupt();
+					System.out.println("du er nu logget af");
 			 }
 			 
 			 
