@@ -16,8 +16,9 @@ public class ServerConnection extends Thread {
 	private User user = null;
 	private DataOutputStream outToClient;
 	private BufferedReader inFromClient;
-	private boolean connOpen = false;
+	private boolean connOpen = true;
 	private char splitter = (char) 007;
+	private TicTacToeLogic tttl=null;
 	
 
 	// Client user
@@ -72,6 +73,9 @@ public class ServerConnection extends Thread {
 								
 				case "CLIENT":	showAllUsers();
 								break;
+								
+				case "NEW": 	newGame();
+								break;
 			}
 			} else {
 				if(connOpen)
@@ -94,6 +98,7 @@ public class ServerConnection extends Thread {
 			user = ConnectionHandler.dbController.login(username, password);
 			if(user==null){
 				try {
+					System.out.println("is this it?");
 					close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -113,6 +118,7 @@ public class ServerConnection extends Thread {
 	}
 	public void close() throws IOException{
 		connOpen = false;
+		System.out.println(client.getUsername());
 		outToClient =  new DataOutputStream(client.getSocket().getOutputStream());;
 		outToClient.writeBytes("CONNCLOSE");
 		client.getSocket().close();
@@ -121,6 +127,7 @@ public class ServerConnection extends Thread {
 		outToClient.close();
 		inFromClient.close();
 		client.close();
+		
 	}
 	public void chat(String requestParam,ClientHandler clients) throws IOException{
 		outToClient = new DataOutputStream(clients.getSocket().getOutputStream());
@@ -130,9 +137,10 @@ public class ServerConnection extends Thread {
 	
 	public void move(int x, int y) throws IOException{
 		outToClient =  new DataOutputStream(client.getSocket().getOutputStream());;
-		if(x!= 2 || y!=3){
-			System.out.println(x+" "+y);
-			outToClient.writeBytes("FALSE"+splitter+x+splitter+y+'\n');
+		if(tttl.setPiece(x, y, user.getID())){
+			outToClient.writeBytes("TRUE"+splitter+ x+""+y +splitter+"hej"+'\n');
+		}else{
+			outToClient.writeBytes("FALSE"+splitter+ x+""+y +splitter+"hej"+'\n');
 		}
 	}
 	public void showAllUsers(){
@@ -143,7 +151,11 @@ public class ServerConnection extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
+		}	
+	}
+public void newGame(){
+	if(tttl==null){
+		tttl = new TicTacToeLogic(3);
+	}
 	}
 }
