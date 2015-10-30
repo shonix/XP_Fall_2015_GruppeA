@@ -78,6 +78,19 @@ public class ClientConnection extends Thread{
 		 
 		 
 	}
+	public void makeMove(int x, int y)
+	{
+		 try {
+			outToServer = new DataOutputStream(getSocket().getOutputStream());
+		
+		 outToServer.writeBytes("MOVE"+ splitChar + 3 + splitChar + 3 + '\n' );
+		 outToServer.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); 
+		} 
+		 
+	}
 	public void requestParty(String oppent)
 	{
 		try {
@@ -122,7 +135,11 @@ public class ClientConnection extends Thread{
 					this.interrupt();
 					System.out.println("du er nu logget af");
 			 }
-			 
+			 if(Chat.equals("FALSE"))
+			 {
+				 System.out.println("dit move er ikke okay.");
+				 // gui.falsemove();
+			 }
 			 
 		 }
 		 
