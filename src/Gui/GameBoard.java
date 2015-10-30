@@ -11,6 +11,7 @@ import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,7 +32,7 @@ public class GameBoard {
     int tempX;
     int tempY;
 
-    Label timerLabel;
+    private static Label timerLabel;
     int fullTurn = 30;
 
     ClientConnection currentConnection;
@@ -140,6 +141,8 @@ public class GameBoard {
     //DENNE KONSTRUKTOR ER KUN TIL TEST, MEN DENS METODER ER DE NYESTE! SKRIV IKKE NOGEN STEDER UDEN AT SPØRGE HR. EMIL!
     public GameBoard() {
 
+        ClientConnection cc = new ClientConnection();
+
         Stage gameStage = new Stage();
         VBox gameBox = new VBox();
 
@@ -209,7 +212,7 @@ public class GameBoard {
             System.out.println("Button pressed at [0,0]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(TL);
+            cc.makeMove(tempX, tempY);
 
         });
 
@@ -219,7 +222,7 @@ public class GameBoard {
             System.out.println("Button pressed at [0,1]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(TM);
+            cc.makeMove(tempX, tempY);
         });
 
         TR.setOnAction(event -> {
@@ -228,7 +231,7 @@ public class GameBoard {
             System.out.println("Button pressed at [0,2]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(TR);
+            cc.makeMove(tempX, tempY);
         });
 
         CL.setOnAction(event -> {
@@ -237,7 +240,7 @@ public class GameBoard {
             System.out.println("Button pressed at [1,0]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(CL);
+            cc.makeMove(tempX, tempY);
         });
         CM.setOnAction(event -> {
             tempX = 1;
@@ -245,7 +248,7 @@ public class GameBoard {
             System.out.println("Button pressed at [1,1]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(CM);
+            cc.makeMove(tempX, tempY);
         });
         CR.setOnAction(event -> {
             tempX = 1;
@@ -253,7 +256,7 @@ public class GameBoard {
             System.out.println("Button pressed at [1,2]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(CR);
+            cc.makeMove(tempX, tempY);
         });
         BL.setOnAction(event -> {
             tempX = 2;
@@ -261,7 +264,7 @@ public class GameBoard {
             System.out.println("Button pressed at [2,0]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(BL);
+            cc.makeMove(tempX, tempY);
         });
         BM.setOnAction(event -> {
             tempX = 2;
@@ -269,7 +272,7 @@ public class GameBoard {
             System.out.println("Button pressed at [2,1]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(BM);
+            cc.makeMove(tempX, tempY);
         });
         BR.setOnAction(event -> {
             tempX = 2;
@@ -277,7 +280,7 @@ public class GameBoard {
             System.out.println("Button pressed at [2,2]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(BR);
+            cc.makeMove(tempX, tempY);
         });
 
         //USERNAMES OG VS I LEFTBOX
@@ -294,13 +297,14 @@ public class GameBoard {
         leftBox.getChildren().addAll(player1, vs, player2);
 
         //TimeBox og antal moves i RIGHTBOX
-        timerLabel = new Label();
+        timerLabel = new Label("30 sekunder pr tur.");
         timerLabel.setPrefHeight(prefHeightTicTac / 2);
         Button startGame = new Button("Start game!");
-        startGame.setOnAction(event -> {
-            startTurnTimer();
-        });
 
+//      Timer virkede IKKE, det er ikke muligt at bruge en låse en thread til at ændre i UI, da der er allerede er en tråd reserveret til UI.
+//        startGame.setOnAction(event -> {
+//            startTurnTimer();
+//        });
         rightBox.getChildren().addAll(startGame, timerLabel);
 
         //Add alle topboxes til upperBox
@@ -339,24 +343,8 @@ public class GameBoard {
 
     }
 
-    private void setTic(Button pressedButton) {
+    public static void setTic(String coords) {
 
-        if (pressedButton.getText() == "") {
-            pressedButton.setText("X");
-        } else if (pressedButton.getText() == "X") {
-            pressedButton.setText("O");
-
-        } else if (pressedButton.getText() == "O") {
-            pressedButton.setText("");
-
-        }
-
-    }
-
-    private void startTurnTimer() {
-        Countdown startCountdown = new Countdown(timerLabel, fullTurn);
-
-        startCountdown.run();
     }
 
 }

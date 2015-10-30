@@ -9,12 +9,10 @@ import javafx.scene.control.Label;
 public class Countdown extends Thread
 {
     
-    Label label;
     int totalTime;
             
-    public Countdown(Label label, int totalTime)
+    public Countdown(int totalTime)
     {
-        this.label = label;
         this.totalTime = totalTime;
     }
     
@@ -22,7 +20,8 @@ public class Countdown extends Thread
     {
         while(totalTime>=0)
         {
-            label.setText("" + totalTime);
+            System.out.println(totalTime);
+            
             totalTime--;
             try
             {
@@ -34,4 +33,6 @@ public class Countdown extends Thread
             }
         }
     }
+
+    
 }
