@@ -17,6 +17,7 @@ public class ClientConnection extends Thread{
 	DataOutputStream outToServer;
 	boolean correct = false;
 	BufferedReader in;
+	GameBoard gb;
 	String username;
         char splitChar = (char) 007;
         
@@ -75,9 +76,9 @@ public class ClientConnection extends Thread{
 		 
 		 
 	}
-	public void makeMove(int x, int y)
+	public void makeMove(int x, int y, GameBoard g)
 	{
-		
+		setGameboard(g);
 		 try {
 			 
 			System.out.println( getSocket().toString());
@@ -150,21 +151,19 @@ public class ClientConnection extends Thread{
 			 if(Chat.equals("FALSE"))
 			 {
 				 System.out.println("dit move er ikke okay.");
-				 GameBoard.setTic(Message,false);
+				 gb.setTic(Message,false);
 			 }
 			 
 			 if(Chat.equals("TRUE"))
 			 {
 				 System.out.println("legit");
-				 System.out.println(Message);
-                                 GameBoard.setTic(Message,true);
-                                 
+				 gb.setTic(Message,true);
 				 //gui.ValidMove(True, Message);
 			 }
 			 
 			 if(Chat.equals("EXMOVE"))
 			 {
-				 GameBoard.setTic(Message,true);
+				 gb.setTic(Message,true);
 //				 gui.makemove(Message, userName);
 			 }
 			 
@@ -270,6 +269,12 @@ public class ClientConnection extends Thread{
 		}
 	}
 	
+	public void setGameboard(GameBoard g)
+	{
+		gb = g ;
+		
+	}
+	
+	
 
 }
-

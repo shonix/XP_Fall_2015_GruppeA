@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,7 +34,6 @@ public class GameBoard {
     int tempX;
     int tempY;
 
-
     ClientConnection currentConnection;
 
     static char xoro;
@@ -54,8 +54,6 @@ public class GameBoard {
         currentConnection = currConnec;
 
         xoro = faction;
-
-        
 
         Stage gameStage = new Stage();
         VBox gameBox = new VBox();
@@ -127,7 +125,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [0,0]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                currConnec.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY, this);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -141,7 +139,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [0,1]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                currConnec.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY, this);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -154,7 +152,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [0,2]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                currConnec.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY, this);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -168,7 +166,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [1,0]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                currConnec.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY, this);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -181,7 +179,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [1,1]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                currConnec.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY, this);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -194,7 +192,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [1,2]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                currConnec.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY, this);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -207,7 +205,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [2,0]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                currConnec.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY, this);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -220,7 +218,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [2,1]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                currConnec.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY, this);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -233,7 +231,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [2,2]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                currConnec.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY, this);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -251,7 +249,6 @@ public class GameBoard {
         vs.setPrefHeight(prefHeightTicTac / 3);
 
         leftBox.getChildren().addAll(player1, vs, player2);
-
 
         //Add alle topboxes til upperBox
         upperBox.getChildren().addAll(leftBox, middleBox, rightBox);
@@ -307,37 +304,40 @@ public class GameBoard {
 
         if (isLegit == true) {
             System.out.println("hep1");
-            switch (coordmark) {
-                case "00":
-                    TL.setText(mark);
-                    break;
-                case "01":
-                    TM.setText(mark);
-                    break;
-                case "02":
-                    TR.setText(mark);
-                    break;
-                case "10":
-                    CL.setText(mark);
-                    break;
-                case "11":
-                    CM.setText(mark);
-                    break;
-                case "12":
-                    CR.setText(mark);
-                    break;
-                case "20":
-                    BL.setText(mark);
-                    break;
-                case "21":
-                    BM.setText(mark);
-                    break;
-                case "22":
-                    BR.setText(mark);
-                    break;
+             final String finalMark = mark;
+            Platform.runLater(() -> {
+                switch (coordmark) {
+                    case "00":
+                        TL.setText(finalMark);
+                        break;
+                    case "01":
+                        TM.setText(finalMark);
+                        break;
+                    case "02":
+                        TR.setText(finalMark);
+                        break;
+                    case "10":
+                        CL.setText(finalMark);
+                        break;
+                    case "11":
+                        CM.setText(finalMark);
+                        break;
+                    case "12":
+                        CR.setText(finalMark);
+                        break;
+                    case "20":
+                        BL.setText(finalMark);
+                        break;
+                    case "21":
+                        BM.setText(finalMark);
+                        break;
+                    case "22":
+                        BR.setText(finalMark);
+                        break;
 
-            }
-            System.out.println("hep");
+                }
+                System.out.println("hep");
+            });
 
         } else {
             JOptionPane.showMessageDialog(null, "Det kan du ikke!");
