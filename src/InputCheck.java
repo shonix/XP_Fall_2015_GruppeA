@@ -14,11 +14,11 @@ public class InputCheck
 
  /*
  *         InputCheck chackes the input if it is valid.
- *         IP must follow the IP standard format. (eg. 192.168.1.1)
+ *         IP must follow the IPv4 standard format. (eg. 192.168.1.1)
  *         Port number must be between 2000 - 65000
  *         User name must be between 6 - 12 characters long, and can't contain special characters.
  *         Password must contain both letters and numbers, and must be between 8 - 16 characters long.
- *         Messege must be longer then 0.
+ *         Message must be longer then 0.
  */
     public static boolean isValid(String inputType, String inputValue)
     {
