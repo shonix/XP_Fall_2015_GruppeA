@@ -145,18 +145,18 @@ public class ClientConnection extends Thread{
 			 if(Chat.equals("FALSE"))
 			 {
 				 System.out.println("dit move er ikke okay.");
-				 GameBoard.setTic(Message);
+				 GameBoard.setTic(Message,false);
 			 }
 			 
 			 if(Chat.equals("TRUE"))
 			 {
-				 GameBoard.setTic(Message);
+				 GameBoard.setTic(Message,true);
 				 //gui.ValidMove(True, Message);
 			 }
 			 
 			 if(Chat.equals("EXMOVE"))
 			 {
-				 GameBoard.setTic(Message);
+				 GameBoard.setTic(Message,true);
 //				 gui.makemove(Message, userName);
 			 }
 			 
