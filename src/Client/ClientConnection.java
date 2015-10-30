@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import Gui.ChatNode;
+import Gui.GameBoard;
 
 
 public class ClientConnection extends Thread{
@@ -144,7 +145,19 @@ public class ClientConnection extends Thread{
 			 if(Chat.equals("FALSE"))
 			 {
 				 System.out.println("dit move er ikke okay.");
-				 // gui.falsemove();
+				 GameBoard.setTic(Message,false);
+			 }
+			 
+			 if(Chat.equals("TRUE"))
+			 {
+				 GameBoard.setTic(Message,true);
+				 //gui.ValidMove(True, Message);
+			 }
+			 
+			 if(Chat.equals("EXMOVE"))
+			 {
+				 GameBoard.setTic(Message,true);
+//				 gui.makemove(Message, userName);
 			 }
 			 
 		 }
@@ -201,6 +214,31 @@ public class ClientConnection extends Thread{
 		
 		
 		return correct;
+	}
+	
+	public void amX()
+	{
+		try{
+			outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+			outToServer.writeBytes("X" + splitChar + getUsername()+ '\n');
+			
+			outToServer.flush();
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+	}
+	public void amY()
+	{
+		try{
+			outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+			outToServer.writeBytes("Y" + splitChar + getUsername()+ '\n');
+			
+			outToServer.flush();
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
 	}
 	public void setUsername(String userName)
 	{

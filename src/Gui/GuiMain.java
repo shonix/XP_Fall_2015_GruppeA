@@ -115,7 +115,7 @@ public class GuiMain extends Application {
         offMode.setText("OfflineMode");
         logOnBox.getChildren().add(offMode);  
         offMode.setOnAction((ActionEvent event) -> {
-            GameBoard test = new GameBoard();
+//            GameBoard test = new GameBoard();
         });
         
       

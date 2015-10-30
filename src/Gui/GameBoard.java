@@ -11,6 +11,7 @@ import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,114 +33,33 @@ public class GameBoard {
     int tempX;
     int tempY;
 
-    Label timerLabel;
+    private static Label timerLabel;
     int fullTurn = 30;
 
     ClientConnection currentConnection;
 
-    public GameBoard(ClientConnection currConnec) {
+    static char xoro;
 
+    static Button TL;
+    static Button TM;
+    static Button TR;
+    static Button CL;
+    static Button CM;
+    static Button CR;
+    static Button BM;
+    static Button BL;
+    static Button BR;
+    
+
+
+    public GameBoard(ClientConnection currConnec, char faction) {
+
+        System.out.println("Player has chosen " + faction);
         currentConnection = currConnec;
 
-        Stage gameStage = new Stage();
-        VBox gameBox = new VBox();
+        xoro = faction;
 
-        //VBOX over chatarea
-        HBox upperBox = new HBox();
-        upperBox.setStyle("-fx-background-color: #336699;");
-
-        GridPane ticTacLayout = new GridPane();
-
-        VBox leftBox = new VBox();
-        VBox middleBox = new VBox(ticTacLayout);
-        VBox rightBox = new VBox();
-
-        leftBox.setStyle("-fx-background-color: #331010;");
-        middleBox.setStyle("-fx-background-color: #696969;");
-        rightBox.setStyle("-fx-background-color: #205588;");
-
-        //Size
-        int prefWidth = 200;
-        int prefHeight = 200;
-
-        int ticTacButtonHeight = prefWidth / 3;
-        int ticTacButtonWidth = prefHeight / 3;
-
-        //TicTac Buttons
-        Button TL = new Button();
-        Button TM = new Button();
-        Button TR = new Button();
-        Button CL = new Button();
-        Button CM = new Button();
-        Button CR = new Button();
-        Button BL = new Button();
-        Button BM = new Button();
-        Button BR = new Button();
-
-        TL.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
-        TM.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
-        TR.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
-        CL.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
-        CM.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
-        CR.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
-        BL.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
-        BM.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
-        BR.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
-
-        //Adding TicTacButtons
-        ticTacLayout.add(TL, 0, 0);
-        ticTacLayout.add(TM, 1, 0);
-        ticTacLayout.add(TR, 2, 0);
-        ticTacLayout.add(CL, 0, 1);
-        ticTacLayout.add(CM, 1, 1);
-        ticTacLayout.add(CR, 2, 1);
-        ticTacLayout.add(BL, 0, 2);
-        ticTacLayout.add(BM, 1, 2);
-        ticTacLayout.add(BR, 2, 2);
-
-        leftBox.setPrefSize(prefWidth, prefHeight);
-        middleBox.setPrefSize(prefWidth, prefHeight);
-        rightBox.setPrefSize(prefWidth, prefHeight);
-
-        upperBox.getChildren().addAll(leftBox, middleBox, rightBox);
-
-        //upperBox.getChildren().addAll(new Button("1"), new Button("2"), new Button("3"), new Button("4"), new Button("5"), new Button("6"), new Button("7"), new Button("8"), new Button("9"));
-        gameBox.getChildren().add(upperBox);
-
-        TextArea chatTextArea = new TextArea();
-        chatTextArea.setEditable(false);
-        ScrollPane chatTextAreaScroll = new ScrollPane(chatTextArea);
-        gameBox.getChildren().add(chatTextAreaScroll);
-
-        ChatNode.addChatList(chatTextArea);
-
-        TextField chat = new TextField();
-
-        chat.setOnAction((ActionEvent chatEnter) -> {
-
-            try {
-
-                currentConnection.sendChatText(chat.getText());
-                System.out.println(chat.getText());
-                chat.clear();
-
-            } catch (IOException ex) {
-                Logger.getLogger(LobbyGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        });
-
-        gameBox.getChildren().add(chat);
-
-        Scene gameScene = new Scene(gameBox, 600, 400);
-        gameStage.setScene(gameScene);
-        gameStage.setResizable(false);
-        gameStage.show();
-
-    }
-
-    //DENNE KONSTRUKTOR ER KUN TIL TEST, MEN DENS METODER ER DE NYESTE! SKRIV IKKE NOGEN STEDER UDEN AT SPØRGE HR. EMIL!
-    public GameBoard() {
+        ClientConnection cc = new ClientConnection();
 
         Stage gameStage = new Stage();
         VBox gameBox = new VBox();
@@ -167,15 +88,15 @@ public class GameBoard {
         int ticTacButtonWidth = prefHeightTicTac / 3;
 
         //TicTac Buttons
-        Button TL = new Button("");
-        Button TM = new Button("");
-        Button TR = new Button("");
-        Button CL = new Button("");
-        Button CM = new Button("");
-        Button CR = new Button("");
-        Button BL = new Button("");
-        Button BM = new Button("");
-        Button BR = new Button("");
+        TL = new Button("");
+        TM = new Button("");
+        TR = new Button("");
+        CL = new Button("");
+        CM = new Button("");
+        CR = new Button("");
+        BL = new Button("");
+        BM = new Button("");
+        BR = new Button("");
 
         TL.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
         TM.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
@@ -209,7 +130,7 @@ public class GameBoard {
             System.out.println("Button pressed at [0,0]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(TL);
+            cc.makeMove(tempX, tempY);
 
         });
 
@@ -219,7 +140,7 @@ public class GameBoard {
             System.out.println("Button pressed at [0,1]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(TM);
+            cc.makeMove(tempX, tempY);
         });
 
         TR.setOnAction(event -> {
@@ -228,7 +149,7 @@ public class GameBoard {
             System.out.println("Button pressed at [0,2]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(TR);
+            cc.makeMove(tempX, tempY);
         });
 
         CL.setOnAction(event -> {
@@ -237,7 +158,7 @@ public class GameBoard {
             System.out.println("Button pressed at [1,0]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(CL);
+            cc.makeMove(tempX, tempY);
         });
         CM.setOnAction(event -> {
             tempX = 1;
@@ -245,7 +166,7 @@ public class GameBoard {
             System.out.println("Button pressed at [1,1]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(CM);
+            cc.makeMove(tempX, tempY);
         });
         CR.setOnAction(event -> {
             tempX = 1;
@@ -253,7 +174,7 @@ public class GameBoard {
             System.out.println("Button pressed at [1,2]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(CR);
+            cc.makeMove(tempX, tempY);
         });
         BL.setOnAction(event -> {
             tempX = 2;
@@ -261,7 +182,7 @@ public class GameBoard {
             System.out.println("Button pressed at [2,0]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(BL);
+            cc.makeMove(tempX, tempY);
         });
         BM.setOnAction(event -> {
             tempX = 2;
@@ -269,7 +190,7 @@ public class GameBoard {
             System.out.println("Button pressed at [2,1]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(BM);
+            cc.makeMove(tempX, tempY);
         });
         BR.setOnAction(event -> {
             tempX = 2;
@@ -277,11 +198,11 @@ public class GameBoard {
             System.out.println("Button pressed at [2,2]");
             System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            setTic(BR);
+            cc.makeMove(tempX, tempY);
         });
 
         //USERNAMES OG VS I LEFTBOX
-        Label player1 = new Label("User.getName her");
+        Label player1 = new Label(currConnec.getUsername());
         Label player2 = new Label("User.getName2 her");
         Label vs = new Label("VS");
 
@@ -294,13 +215,14 @@ public class GameBoard {
         leftBox.getChildren().addAll(player1, vs, player2);
 
         //TimeBox og antal moves i RIGHTBOX
-        timerLabel = new Label();
+        timerLabel = new Label("30 sekunder pr tur.");
         timerLabel.setPrefHeight(prefHeightTicTac / 2);
         Button startGame = new Button("Start game!");
-        startGame.setOnAction(event -> {
-            startTurnTimer();
-        });
 
+//      Timer virkede IKKE, det er ikke muligt at bruge en låse en thread til at ændre i UI, da der er allerede er en tråd reserveret til UI.
+//        startGame.setOnAction(event -> {
+//            startTurnTimer();
+//        });
         rightBox.getChildren().addAll(startGame, timerLabel);
 
         //Add alle topboxes til upperBox
@@ -339,24 +261,45 @@ public class GameBoard {
 
     }
 
-    private void setTic(Button pressedButton) {
+    public static void setTic(String coords, boolean isLegit) {
+        String mark = "T";
+        String coordmark = coords;
 
-        if (pressedButton.getText() == "") {
-            pressedButton.setText("X");
-        } else if (pressedButton.getText() == "X") {
-            pressedButton.setText("O");
-
-        } else if (pressedButton.getText() == "O") {
-            pressedButton.setText("");
-
+        if (xoro == 'o') {
+            mark = "o";
+        } else if (xoro == 'x') {
+            mark = "x";
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingen faction valgt, luk programmet og start forfra.");
         }
 
-    }
+        if (isLegit == true) {
+            switch (coordmark) {
+                case "00": TL.setText(mark);
+                    break;
+                case "01": TM.setText(mark);
+                    break;
+                case "02": TR.setText(mark);
+                    break;
+                case "10": CL.setText(mark);
+                    break;
+                case "11": CM.setText(mark);
+                    break;
+                case "12": CR.setText(mark);
+                    break;
+                case "20": BL.setText(mark);
+                    break;
+                case "21": BM.setText(mark);
+                    break;
+                case "22": BR.setText(mark);
+                    break;
 
-    private void startTurnTimer() {
-        Countdown startCountdown = new Countdown(timerLabel, fullTurn);
+            }
 
-        startCountdown.run();
+        } else {
+            JOptionPane.showMessageDialog(null, "Det kan du ikke!");
+        }
+
     }
 
 }
