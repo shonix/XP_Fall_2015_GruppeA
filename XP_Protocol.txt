@@ -1,5 +1,6 @@
 CHAT/"message"
 CHATRETURN/"message"/username
 LOGIN/username/password
-LOGINRETURN/boolean
+CONNCLOSE
 CLOSE/"EXIT"
+MOVE/int(x)/int(y)

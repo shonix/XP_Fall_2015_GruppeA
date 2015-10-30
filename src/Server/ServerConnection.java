@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import DBAccess.DBController;
 
@@ -14,6 +14,7 @@ public class ServerConnection extends Thread {
 	private Boolean connected = true;
 	private ClientHandler client;
 	private User user = null;
+	private DataOutputStream outToClient;
 	private char splitter = (char) 007;
 	
 
@@ -34,50 +35,63 @@ public class ServerConnection extends Thread {
 
 	public void confirmClient(Socket userSocket) throws IOException {
 		String[] requestParam;
-		System.out.println("A connection has been made, waiting for input");
-		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(
-				userSocket.getInputStream()));
-		DataOutputStream outToClient =  new DataOutputStream(client.getSocket()
-				.getOutputStream());;
+		outToClient  =  new DataOutputStream(client.getSocket().getOutputStream());;
+		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(userSocket.getInputStream()));
 		
 		while (connected) { 
-			System.out.println("waiting");
 			String request = inFromClient.readLine();
 			String split = String.valueOf(splitter);
 			requestParam = request.split(split);
 
-			if (requestParam[0].equals("")) {
-				System.out.println("Waiting for input");
-			}
-
-			else if (requestParam[0].equals("LOGIN")) {
-				login(requestParam[1],requestParam[2]);
-			}
-			if (user != null) {
-
-				if (requestParam[0].equals("CHAT")) {
-					System.out.println("recieved " + requestParam[1]);
-					for (ClientHandler clients : ConnectionHandler.allUsers) {
-						chat(requestParam[1],clients);
-						}
-				} else if (requestParam[0].equals("EXIT")) {
-					close();
-					
+			switch(requestParam[0]){
+			case "":		System.out.println("Waiting for input");
+							break;
+						
+			case "LOGIN":	login(requestParam[1],requestParam[2]);
+							break;
 				}
+			
+			if (user != null) {
+				switch(requestParam[0]){
+				case "CHAT":	System.out.println("recieved " + requestParam[1]);
+								for (ClientHandler clients : ConnectionHandler.allUsers) {
+								chat(requestParam[1],clients);}
+								break;
+								
+				case "EXIT": 	close();
+								break;
+								
+				case "MOVE":	int x = Integer.parseInt(requestParam[1]);
+								int y = Integer.parseInt(requestParam[2]);
+								move(x,y);
+								break;
+								
+				case "CLIENT":	showAllUsers();
+								break;
+			}
 			} else {
 				close();
 			}
 		}
 	}
 	public void login(String username, String password){
-		System.out.println(username);
-		System.out.println(password);
-		System.out.println(client.getUsername());
 		client.setUsername(username);
-		user = ConnectionHandler.dbController.login(username, password);
+		for(ClientHandler clients: ConnectionHandler.allUsers){
+			if(username.equals(clients.getUsername())){
+				System.out.println(username);
+				user=null;
+				System.out.println("log lige ind ordentligt plz");
+				break;
+			}
+			else{
+				user = ConnectionHandler.dbController.login(username, password);
+				System.out.println("gz fgt, u did it");
+			}
+		}
+		
 	}
 	public void close() throws IOException{
-		DataOutputStream outToClient =  new DataOutputStream(client.getSocket().getOutputStream());;
+		outToClient =  new DataOutputStream(client.getSocket().getOutputStream());;
 		outToClient.writeBytes("CONNCLOSE");
 		client.getSocket().close();
 		user=null;
@@ -86,10 +100,33 @@ public class ServerConnection extends Thread {
 		client.close();
 	}
 	public void chat(String requestParam,ClientHandler clients) throws IOException{
-		DataOutputStream outToClient = new DataOutputStream(clients.getSocket()
-				.getOutputStream());
-		outToClient.writeBytes("CHAT" + splitter
-				+ requestParam + splitter + client.getUsername() + '\n');
+		outToClient = new DataOutputStream(clients.getSocket().getOutputStream());
+		outToClient.writeBytes("CHAT" + splitter + requestParam + splitter + client.getUsername() + '\n');
 		System.out.println("Sending " + requestParam);
 }
+	
+	public void move(int x, int y) throws IOException{
+		outToClient =  new DataOutputStream(client.getSocket().getOutputStream());;
+		if(x!= 2 || y!=3){
+			System.out.println(x+" "+y);
+			outToClient.writeBytes("FALSE"+splitter+x+splitter+y+'\n');
+		}
+	}
+	public void showAllUsers(){
+		ArrayList<String> activeUsers = new ArrayList<>();
+		for(ClientHandler clients: ConnectionHandler.allUsers){
+			activeUsers.add(clients.getUsername());
+			try {
+				for(String users : activeUsers){
+					outToClient.writeBytes("CLIENT" + splitter + "user joined the channel"+splitter+users+'\n');
+				System.out.println(users);
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
 }
