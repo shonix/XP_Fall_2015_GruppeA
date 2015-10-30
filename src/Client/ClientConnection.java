@@ -150,11 +150,13 @@ public class ClientConnection extends Thread{
 			 
 			 if(Chat.equals("TRUE"))
 			 {
+				 GameBoard.setTic(Message);
 				 //gui.ValidMove(True, Message);
 			 }
 			 
 			 if(Chat.equals("EXMOVE"))
 			 {
+				 GameBoard.setTic(Message);
 //				 gui.makemove(Message, userName);
 			 }
 			 
