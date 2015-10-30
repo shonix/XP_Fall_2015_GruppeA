@@ -26,11 +26,7 @@ public class ClientConnection extends Thread{
 	
 	public void run() {
 		
-		try {
-		    Thread.sleep(500);                 //1000 milliseconds is one second.
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}
+		
 		
 		if(getSocket().isClosed())
 		{
@@ -83,7 +79,7 @@ public class ClientConnection extends Thread{
 		 try {
 			outToServer = new DataOutputStream(getSocket().getOutputStream());
 		
-		 outToServer.writeBytes("MOVE"+ splitChar + 3 + splitChar + 3 + '\n' );
+		 outToServer.writeBytes("MOVE"+ splitChar + x + splitChar + y + '\n' );
 		 outToServer.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -125,9 +121,19 @@ public class ClientConnection extends Thread{
 			String Message = parts[1]; // 034556
 			String userName = parts[2]; // 004
 			
-			System.out.println(Message);
-			System.out.println(userName);
+			
+			
+			
+			if(Chat.equals("CLIENT"))
+				{
+				System.out.println(Message);
+				System.out.println(userName);
+				}
+			
+			if(Chat.equals("CHAT"))
+			{
 			 ChatNode.updateChats(userName, Message);
+			}
 			 
 			 if(Chat.equals("CONNCLOSE"))
 			 {
@@ -154,7 +160,7 @@ public class ClientConnection extends Thread{
 		outToServer.writeBytes("CHAT" + splitChar + txt + '\n');
 		
 		outToServer.flush();
-		
+				
 	}
 	
 	public void setSocket(String ip, int port) throws Exception
