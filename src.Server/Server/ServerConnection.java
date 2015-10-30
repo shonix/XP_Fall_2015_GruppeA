@@ -15,6 +15,8 @@ public class ServerConnection extends Thread {
 	private ClientHandler client;
 	private User user = null;
 	private DataOutputStream outToClient;
+	private BufferedReader inFromClient;
+	private boolean connOpen = false;
 	private char splitter = (char) 007;
 	
 
@@ -25,21 +27,23 @@ public class ServerConnection extends Thread {
 	}
 
 	public void run() {
-		try {
-			confirmClient(userSocket);
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
+		confirmClient(userSocket);
 	}
 
-	public void confirmClient(Socket userSocket) throws IOException {
+	public void confirmClient(Socket userSocket)  {
+		connOpen = true;
 		String[] requestParam;
-		outToClient  =  new DataOutputStream(client.getSocket().getOutputStream());;
-		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(userSocket.getInputStream()));
 		
+		try {
+		outToClient  =  new DataOutputStream(client.getSocket().getOutputStream());
+		inFromClient = new BufferedReader(new InputStreamReader(userSocket.getInputStream()));
+		} catch (IOException e1) {e1.printStackTrace();};
+		
+		try {
 		while (connected) { 
-			String request = inFromClient.readLine();
+			String request;
+			
+			request = inFromClient.readLine();
 			String split = String.valueOf(splitter);
 			requestParam = request.split(split);
 
@@ -70,33 +74,52 @@ public class ServerConnection extends Thread {
 								break;
 			}
 			} else {
+				if(connOpen)
 				close();
 			}
+		}} catch (IOException e) {
+			connected=false;
+			e.printStackTrace();
 		}
 	}
 	public void login(String username, String password){
-		client.setUsername(username);
+		boolean isLoggedIn = false;
+		
 		for(ClientHandler clients: ConnectionHandler.allUsers){
-			if(username.equals(clients.getUsername())){
-				System.out.println(username);
-				user=null;
-				System.out.println("log lige ind ordentligt plz");
-				break;
+			if(username.equals(clients.getUsername())){isLoggedIn=true;}
+			else{isLoggedIn=false;}}
+		
+		if(!isLoggedIn){
+			client.setUsername(username);
+			user = ConnectionHandler.dbController.login(username, password);
+			if(user==null){
+				try {
+					close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			else{
-				user = ConnectionHandler.dbController.login(username, password);
-				System.out.println("gz fgt, u did it");
+			if(connOpen){
+			showAllUsers();
 			}
+			System.out.println("gz fgt, u did it");
+		}else{
+			System.out.println(username);
+			user=null;
+			System.out.println("log lige ind ordentligt plz");
 		}
 		
 	}
 	public void close() throws IOException{
+		connOpen = false;
 		outToClient =  new DataOutputStream(client.getSocket().getOutputStream());;
 		outToClient.writeBytes("CONNCLOSE");
 		client.getSocket().close();
 		user=null;
 		connected=false;
 		outToClient.close();
+		inFromClient.close();
 		client.close();
 	}
 	public void chat(String requestParam,ClientHandler clients) throws IOException{
@@ -113,15 +136,9 @@ public class ServerConnection extends Thread {
 		}
 	}
 	public void showAllUsers(){
-		ArrayList<String> activeUsers = new ArrayList<>();
 		for(ClientHandler clients: ConnectionHandler.allUsers){
-			activeUsers.add(clients.getUsername());
 			try {
-				for(String users : activeUsers){
-					outToClient.writeBytes("CLIENT" + splitter + "user joined the channel"+splitter+users+'\n');
-				System.out.println(users);
-				}
-				
+				outToClient.writeBytes("CLIENT" + splitter + "user joined the channel"+splitter+clients.getUsername()+'\n');
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

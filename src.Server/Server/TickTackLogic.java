@@ -24,9 +24,9 @@ public class TickTackLogic {
         System.out.println(makeMove(new Point(1,1), "else"));
         System.out.println(makeMove(new Point(1,2), "else"));
         System.out.println(makeMove(new Point(1,2), "bent"));
-        System.out.println(testForWin());
+        System.out.println(testForWin(""));
         System.out.println(makeMove(new Point(1,0), "else"));
-        System.out.println(testForWin());
+        System.out.println(testForWin(""));
         
         
 
