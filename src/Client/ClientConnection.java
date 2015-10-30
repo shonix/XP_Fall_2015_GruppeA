@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import Gui.ChatNode;
+import Gui.GameBoard;
 
 
 public class ClientConnection extends Thread{
@@ -144,12 +145,12 @@ public class ClientConnection extends Thread{
 			 if(Chat.equals("FALSE"))
 			 {
 				 System.out.println("dit move er ikke okay.");
-				 // gui.ValidMove(False, Message, userName);
+				 GameBoard.setTic(Message);
 			 }
 			 
 			 if(Chat.equals("TRUE"))
 			 {
-				 //gui.ValidMove(True, Message, userName);
+				 //gui.ValidMove(True, Message);
 			 }
 			 
 			 if(Chat.equals("EXMOVE"))
