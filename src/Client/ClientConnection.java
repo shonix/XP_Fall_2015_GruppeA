@@ -155,6 +155,7 @@ public class ClientConnection extends Thread{
 			 
 			 if(Chat.equals("TRUE"))
 			 {
+				 System.out.println("legit");
 				 GameBoard.setTic(Message,true);
 				 //gui.ValidMove(True, Message);
 			 }
