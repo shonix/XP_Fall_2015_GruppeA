@@ -33,8 +33,6 @@ public class GameBoard {
     int tempX;
     int tempY;
 
-    private static Label timerLabel;
-    int fullTurn = 30;
 
     ClientConnection currentConnection;
 
@@ -57,7 +55,7 @@ public class GameBoard {
 
         xoro = faction;
 
-        ClientConnection cc = new ClientConnection();
+        
 
         Stage gameStage = new Stage();
         VBox gameBox = new VBox();
@@ -129,7 +127,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [0,0]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -143,7 +141,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [0,1]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -156,7 +154,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [0,2]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -170,7 +168,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [1,0]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -183,7 +181,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [1,1]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -196,7 +194,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [1,2]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -209,7 +207,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [2,0]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -222,7 +220,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [2,1]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -235,7 +233,7 @@ public class GameBoard {
                 System.out.println("Button pressed at [2,2]");
                 System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-                cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
             } else {
                 JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
             }
@@ -254,16 +252,6 @@ public class GameBoard {
 
         leftBox.getChildren().addAll(player1, vs, player2);
 
-        //TimeBox og antal moves i RIGHTBOX
-        timerLabel = new Label("30 sekunder pr tur.");
-        timerLabel.setPrefHeight(prefHeightTicTac / 2);
-        Button startGame = new Button("Start game!");
-
-//      Timer virkede IKKE, det er ikke muligt at bruge en låse en thread til at ændre i UI, da der er allerede er en tråd reserveret til UI.
-//        startGame.setOnAction(event -> {
-//            startTurnTimer();
-//        });
-        rightBox.getChildren().addAll(startGame, timerLabel);
 
         //Add alle topboxes til upperBox
         upperBox.getChildren().addAll(leftBox, middleBox, rightBox);
