@@ -6,10 +6,8 @@
 package Gui;
 
 import Client.ClientConnection;
-import java.awt.Frame;
 import java.io.IOException;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -32,6 +30,9 @@ public class GameBoard {
 
     int tempX;
     int tempY;
+
+    Label timerLabel;
+    int fullTurn = 30;
 
     ClientConnection currentConnection;
 
@@ -293,8 +294,14 @@ public class GameBoard {
         leftBox.getChildren().addAll(player1, vs, player2);
 
         //TimeBox og antal moves i RIGHTBOX
-        Label timeLabel = new Label();
-        timeLabel.setPrefHeight(prefHeightTicTac / 2);
+        timerLabel = new Label();
+        timerLabel.setPrefHeight(prefHeightTicTac / 2);
+        Button startGame = new Button("Start game!");
+        startGame.setOnAction(event -> {
+            startTurnTimer();
+        });
+
+        rightBox.getChildren().addAll(startGame, timerLabel);
 
         //Add alle topboxes til upperBox
         upperBox.getChildren().addAll(leftBox, middleBox, rightBox);
@@ -346,8 +353,10 @@ public class GameBoard {
 
     }
 
-    private void turnTimer() {
+    private void startTurnTimer() {
+        Countdown startCountdown = new Countdown(timerLabel, fullTurn);
 
+        startCountdown.run();
     }
 
 }

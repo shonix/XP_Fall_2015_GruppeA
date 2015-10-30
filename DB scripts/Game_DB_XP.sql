@@ -13,8 +13,8 @@ grant all privileges on mydb.* to sqluser@localhost;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS user (
   ID INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(45) NOT NULL,
-  password VARCHAR(45) NOT NULL,
+  name VARCHAR(18) NOT NULL,
+  password VARCHAR(20) NOT NULL,
   IP VARCHAR(15) NOT NULL,
   PRIMARY KEY (ID),
   UNIQUE INDEX name_UNIQUE (name ASC));
