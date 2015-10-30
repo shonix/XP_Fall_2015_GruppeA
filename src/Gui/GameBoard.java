@@ -310,9 +310,9 @@ public class GameBoard {
         String coordmark = coords;
 
         if (xoro == 'o') {
-            mark = "o";
+            mark = "O";
         } else if (xoro == 'x') {
-            mark = "x";
+            mark = "X";
         } else {
             JOptionPane.showMessageDialog(null, "Ingen faction valgt, luk programmet og start forfra.");
         }
