@@ -186,11 +186,12 @@ public class LobbyGUI {
         typingField.setOnAction((ActionEvent chatEnter) -> {
 
             try {
-
+                if(InputCheck.isValid("Message", typingField.getText())){
                 currentConnection.sendChatText(typingField.getText());
-                System.out.println(typingField.getText());
                 typingField.clear();
-
+                } 
+                    
+                
             } catch (IOException ex) {
                 System.out.println("sendChatText() fail");
             }
