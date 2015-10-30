@@ -6,7 +6,6 @@
 package Gui;
 
 import Client.ClientConnection;
-import InputCheck;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.logging.Level;
