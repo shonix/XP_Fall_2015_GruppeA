@@ -4,9 +4,9 @@ values
 ('PeterJ', 'admin123', '192.168.0.2'),
 ('Jannik', 'admin123', '192.168.0.3'),
 ('PeterR', 'admin123', '192.168.0.4'),
-('Emiiil', 'admin123', '192.168.0.5'),
-('Daaaan', 'admin123', '192.168.0.6'),
-('Nikiii', 'admin123', '192.168.0.7'),
+('Emil', 'admin123', '192.168.0.5'),
+('Daan', 'admin123', '192.168.0.6'),
+('Niki', 'admin123', '192.168.0.7'),
 ('Elinor', 'admin123', '192.168.0.8'),
 ('Marcus', 'admin123', '192.168.0.9');
 insert into mydb.status(userID)
