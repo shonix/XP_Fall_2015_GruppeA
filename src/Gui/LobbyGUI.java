@@ -49,6 +49,7 @@ public class LobbyGUI {
 
     VBox subMenuGame;
     char selectedGameVariable = '0';
+    char teamToPlay = 't';
 
     VBox subMenuParty;
     TableView partyTable;
@@ -94,7 +95,7 @@ public class LobbyGUI {
 
     private void subMenuGameCreate() {
 
-        char teamToPlay = 't';
+        
         subMenuGame = new VBox();
         HBox xoroBox = new HBox();
 
@@ -105,7 +106,7 @@ public class LobbyGUI {
 
             selectedGameVariable = 't';
 
-            GameBoard testytest = new GameBoard(currentConnection, char teamToPlay);
+            GameBoard testytest = new GameBoard(currentConnection, teamToPlay);
 
             System.out.println(event.getSource() + " pressed");
         });

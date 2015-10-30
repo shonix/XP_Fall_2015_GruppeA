@@ -42,6 +42,7 @@ public class GameBoard {
     //DENNE KONSTRUKTOR ER KUN TIL TEST, MEN DENS METODER ER DE NYESTE! SKRIV IKKE NOGEN STEDER UDEN AT SPØRGE HR. EMIL!
     public GameBoard(ClientConnection currConnec, char faction) {
 
+        System.out.println("Player has chosen " + faction);
         currentConnection = currConnec;
 
         char xoro = 'T';
