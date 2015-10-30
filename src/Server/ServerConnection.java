@@ -14,7 +14,7 @@ public class ServerConnection extends Thread {
 	private Boolean connected = true;
 	private ClientHandler client;
 	private User user = null;
-	
+	private char splitter = (char) 007;
 	
 
 	// Client user
@@ -40,12 +40,9 @@ public class ServerConnection extends Thread {
 		DataOutputStream outToClient =  new DataOutputStream(client.getSocket()
 				.getOutputStream());;
 		
-		while (connected) {
-			String username = null; 
-			String password = null;  
+		while (connected) { 
 			System.out.println("waiting");
 			String request = inFromClient.readLine();
-			char splitter = (char) 007;
 			String split = String.valueOf(splitter);
 			requestParam = request.split(split);
 
@@ -61,23 +58,14 @@ public class ServerConnection extends Thread {
 				if (requestParam[0].equals("CHAT")) {
 					System.out.println("recieved " + requestParam[1]);
 					for (ClientHandler clients : ConnectionHandler.allUsers) {
-						outToClient = new DataOutputStream(clients.getSocket()
-								.getOutputStream());
-						outToClient.writeBytes("CHAT" + splitter
-								+ requestParam[1] + splitter + client.getUsername() + '\n');
-						System.out.println("Sending " + requestParam[1]);
-					}
+						chat(requestParam[1],clients);
+						}
 				} else if (requestParam[0].equals("EXIT")) {
-					outToClient.writeBytes("CONNCLOSE");
-					client.getSocket().close();
-					user=null;
-					connected=false;
-					outToClient.close();
-					client.close();
+					close();
 					
 				}
 			} else {
-				System.out.println("Invalid user");
+				close();
 			}
 		}
 	}
@@ -87,6 +75,21 @@ public class ServerConnection extends Thread {
 		System.out.println(client.getUsername());
 		client.setUsername(username);
 		user = ConnectionHandler.dbController.login(username, password);
-		
 	}
+	public void close() throws IOException{
+		DataOutputStream outToClient =  new DataOutputStream(client.getSocket().getOutputStream());;
+		outToClient.writeBytes("CONNCLOSE");
+		client.getSocket().close();
+		user=null;
+		connected=false;
+		outToClient.close();
+		client.close();
+	}
+	public void chat(String requestParam,ClientHandler clients) throws IOException{
+		DataOutputStream outToClient = new DataOutputStream(clients.getSocket()
+				.getOutputStream());
+		outToClient.writeBytes("CHAT" + splitter
+				+ requestParam + splitter + client.getUsername() + '\n');
+		System.out.println("Sending " + requestParam);
+}
 }
