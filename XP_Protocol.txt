@@ -1,0 +1,5 @@
+CHAT/"message"
+CHATRETURN/"message"/username
+LOGIN/username/password
+LOGINRETURN/boolean
+CLOSE/"EXIT"
