@@ -6,6 +6,7 @@
 package Gui;
 
 import Client.ClientConnection;
+import InputCheck;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.logging.Level;
@@ -49,8 +50,6 @@ public class GameBoard {
     static Button BM;
     static Button BL;
     static Button BR;
-    
-
 
     public GameBoard(ClientConnection currConnec, char faction) {
 
@@ -242,9 +241,14 @@ public class GameBoard {
 
             try {
 
-                currentConnection.sendChatText(chat.getText());
-                System.out.println(chat.getText());
-                chat.clear();
+                String text = chat.getText();
+                if (InputCheck.isValid("Message", text))
+                         {
+                    currentConnection.sendChatText(text);
+                    System.out.println(text);
+                    chat.clear();
+
+                }
 
             } catch (IOException ex) {
                 Logger.getLogger(LobbyGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -275,23 +279,32 @@ public class GameBoard {
 
         if (isLegit == true) {
             switch (coordmark) {
-                case "00": TL.setText(mark);
+                case "00":
+                    TL.setText(mark);
                     break;
-                case "01": TM.setText(mark);
+                case "01":
+                    TM.setText(mark);
                     break;
-                case "02": TR.setText(mark);
+                case "02":
+                    TR.setText(mark);
                     break;
-                case "10": CL.setText(mark);
+                case "10":
+                    CL.setText(mark);
                     break;
-                case "11": CM.setText(mark);
+                case "11":
+                    CM.setText(mark);
                     break;
-                case "12": CR.setText(mark);
+                case "12":
+                    CR.setText(mark);
                     break;
-                case "20": BL.setText(mark);
+                case "20":
+                    BL.setText(mark);
                     break;
-                case "21": BM.setText(mark);
+                case "21":
+                    BM.setText(mark);
                     break;
-                case "22": BR.setText(mark);
+                case "22":
+                    BR.setText(mark);
                     break;
 
             }
