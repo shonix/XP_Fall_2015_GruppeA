@@ -94,26 +94,44 @@ public class LobbyGUI {
 
     private void subMenuGameCreate() {
 
+        char teamToPlay = 't';
         subMenuGame = new VBox();
+        HBox xoroBox = new HBox();
 
         //Tictactoe button
-        Button ticTacToeButton = new Button("Tic-Tac-Toe");
+        Button ticTacToeButton = new Button("Start Tic-Tac-Toe");
 
         ticTacToeButton.setOnAction((ActionEvent event) -> {
 
             selectedGameVariable = 't';
 
-            GameBoard testytest = new GameBoard(currentConnection);
+            GameBoard testytest = new GameBoard(currentConnection, char teamToPlay);
 
             System.out.println(event.getSource() + " pressed");
         });
 
-        //Temp game2 button
-        Button game2Button = new Button("Game2");
+        //x team button
+        Button xTeamButton = new Button("Play as x");
 
-        game2Button.setOnAction((ActionEvent event) -> {
-            System.out.println(event.getSource() + " pressed");
+        xTeamButton.setOnAction((ActionEvent event) -> {
+
+            teamToPlay = 'x';
+
         });
+        //o team button
+        Button oTeamButton = new Button("Play as o");
+
+        oTeamButton.setOnAction((ActionEvent event) -> {
+
+            teamToPlay = 'o';
+
+        });
+
+        //add to xoroBox
+        xoroBox.setAlignment(Pos.CENTER);
+        xoroBox.setPrefWidth(lobbySceneWidth / 2);
+        xoroBox.getChildren().add(xTeamButton);
+        xoroBox.getChildren().add(oTeamButton);
 
         //submenu layout
         subMenuGame.setAlignment(Pos.CENTER);
@@ -122,7 +140,7 @@ public class LobbyGUI {
 
         //add nodes to submenu
         subMenuGame.getChildren().add(ticTacToeButton);
-        subMenuGame.getChildren().add(game2Button);
+        subMenuGame.getChildren().add(xoroBox);
 
     }
 
@@ -131,32 +149,29 @@ public class LobbyGUI {
         subMenuParty = new VBox();
 
         HBox inviteBox = new HBox();
-        
+
         //Invite stuff
-        
-        
         Button inviteButton = new Button("invite");
 
         inviteButton.setOnAction((ActionEvent event) -> {
             currentConnection.requestParty(partyTypeField.getText());
             partyTypeField.clear();
         });
-        
+
         partyTable = new TableView();
         partyTable.setPrefHeight(lobbySceneHeight / 4);
         //invite type field
         partyTypeField = new TextField();
         partyTypeField.setOnAction((ActionEvent partyEnter) -> {
-            
+
             currentConnection.requestParty(partyTypeField.getText());
             partyTypeField.clear();
-        
+
         });
 
         inviteBox.getChildren().add(partyTypeField);
         inviteBox.getChildren().add(inviteButton);
-        
-        
+
         //Chat del i partyframe 
         TextArea partyTextArea = new TextArea();
         partyTextArea.setEditable(false);
@@ -185,8 +200,7 @@ public class LobbyGUI {
         subMenuParty.setPrefSize(lobbySceneWidth / 2, lobbySceneHeight / 2);
         subMenuParty.setAlignment(Pos.CENTER);
         subMenuParty.setSpacing(5);
-        
-        
+
         subMenuParty.getChildren().add(partyTable);
         subMenuParty.getChildren().add(inviteBox);
         subMenuParty.getChildren().add(partyTextAreaScroll);
