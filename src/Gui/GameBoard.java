@@ -22,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,16 +38,27 @@ public class GameBoard {
 
     ClientConnection currentConnection;
 
+    static char xoro;
+
+    static Button TL;
+    static Button TM;
+    static Button TR;
+    static Button CL;
+    static Button CM;
+    static Button CR;
+    static Button BM;
+    static Button BL;
+    static Button BR;
     
 
-    //DENNE KONSTRUKTOR ER KUN TIL TEST, MEN DENS METODER ER DE NYESTE! SKRIV IKKE NOGEN STEDER UDEN AT SPØRGE HR. EMIL!
+
     public GameBoard(ClientConnection currConnec, char faction) {
 
         System.out.println("Player has chosen " + faction);
         currentConnection = currConnec;
 
-        char xoro = 'T';
-        
+        xoro = faction;
+
         ClientConnection cc = new ClientConnection();
 
         Stage gameStage = new Stage();
@@ -76,15 +88,15 @@ public class GameBoard {
         int ticTacButtonWidth = prefHeightTicTac / 3;
 
         //TicTac Buttons
-        Button TL = new Button("");
-        Button TM = new Button("");
-        Button TR = new Button("");
-        Button CL = new Button("");
-        Button CM = new Button("");
-        Button CR = new Button("");
-        Button BL = new Button("");
-        Button BM = new Button("");
-        Button BR = new Button("");
+        TL = new Button("");
+        TM = new Button("");
+        TR = new Button("");
+        CL = new Button("");
+        CM = new Button("");
+        CR = new Button("");
+        BL = new Button("");
+        BM = new Button("");
+        BR = new Button("");
 
         TL.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
         TM.setPrefSize(ticTacButtonWidth, ticTacButtonHeight);
@@ -190,7 +202,7 @@ public class GameBoard {
         });
 
         //USERNAMES OG VS I LEFTBOX
-        Label player1 = new Label("User.getName her");
+        Label player1 = new Label(currConnec.getUsername());
         Label player2 = new Label("User.getName2 her");
         Label vs = new Label("VS");
 
@@ -250,6 +262,43 @@ public class GameBoard {
     }
 
     public static void setTic(String coords, boolean isLegit) {
+        String mark = "T";
+        String coordmark = coords;
+
+        if (xoro == 'o') {
+            mark = "o";
+        } else if (xoro == 'x') {
+            mark = "x";
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingen faction valgt, luk programmet og start forfra.");
+        }
+
+        if (isLegit == true) {
+            switch (coordmark) {
+                case "00": TL.setText(mark);
+                    break;
+                case "01": TM.setText(mark);
+                    break;
+                case "02": TR.setText(mark);
+                    break;
+                case "10": CL.setText(mark);
+                    break;
+                case "11": CM.setText(mark);
+                    break;
+                case "12": CR.setText(mark);
+                    break;
+                case "20": BL.setText(mark);
+                    break;
+                case "21": BM.setText(mark);
+                    break;
+                case "22": BR.setText(mark);
+                    break;
+
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Det kan du ikke!");
+        }
 
     }
 
