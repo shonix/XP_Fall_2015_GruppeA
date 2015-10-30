@@ -254,7 +254,18 @@ public class ClientConnection extends Thread{
 		return username;
 	}
 	
-	
+	public void newGame()
+	{
+		try{
+			outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+			outToServer.writeBytes("NEW" + splitChar + getUsername()+ '\n');
+			
+			outToServer.flush();
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+	}
 	
 
 }
