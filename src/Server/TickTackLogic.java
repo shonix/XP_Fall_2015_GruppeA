@@ -69,7 +69,7 @@ public class TickTackLogic {
         }
         return false;
     }
-    public static boolean testForWin(){// has the game end
+    public static boolean testForWin(String name){// has the game end, string to be replaced by user obj
         if(turnInTotal < currentTurn){
            return false; 
         }
@@ -77,7 +77,7 @@ public class TickTackLogic {
         outerloop:for(Point[] pointArray : allWinCon){// test win cindition BUG
             int winnerTest = 0;
             winner = null;
-            for(Point testPoint : pointArray ){//BUg if first point is null and rest is true
+            for(Point testPoint : pointArray ){//BUg 
                if(winner == null || winner == board [(int)testPoint.getX()][(int)testPoint.getY()]){
                    winner = board [(int)testPoint.getX()][(int)testPoint.getY()];
                    System.out.println(winnerTest++);
@@ -86,7 +86,7 @@ public class TickTackLogic {
                else{
                    break outerloop;
                }
-               if(winnerTest == 3 && winner != null){
+               if(winnerTest == 3){
                    System.out.println(winner);
                    return true;  
                }

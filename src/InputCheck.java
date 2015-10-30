@@ -57,9 +57,10 @@ public class InputCheck
     private static boolean checkPort(String input)
     {
         boolean valid = false;
-        if (input.length() == 4)
+        if (patternPort.matcher(input).matches())
         {
-            valid = patternPort.matcher(input).matches();
+            int value = Integer.parseInt(input);
+            if(value >= 2000 && value <= 65000) valid = true;
         }
         return valid;
     }
