@@ -77,11 +77,16 @@ public class ClientConnection extends Thread{
 	}
 	public void makeMove(int x, int y)
 	{
-		 try {
-			outToServer = new DataOutputStream(getSocket().getOutputStream());
 		
+		 try {
+			 
+			System.out.println( getSocket().toString());
+			 System.out.println(x);
+			outToServer = new DataOutputStream(getSocket().getOutputStream());
+		System.out.println(x);
 		 outToServer.writeBytes("MOVE"+ splitChar + x + splitChar + y + '\n' );
-		 outToServer.flush();
+		 
+		 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace(); 
