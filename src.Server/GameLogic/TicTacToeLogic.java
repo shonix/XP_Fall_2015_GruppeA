@@ -1,4 +1,4 @@
-package Server;
+package GameLogic;
 
 /**
  * Created by Peter Jensen on 30-10-2015.
