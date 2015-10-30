@@ -33,8 +33,6 @@ public class GameBoard {
     int tempX;
     int tempY;
 
-    private static Label timerLabel;
-    int fullTurn = 30;
 
     ClientConnection currentConnection;
 
@@ -49,8 +47,6 @@ public class GameBoard {
     static Button BM;
     static Button BL;
     static Button BR;
-    
-
 
     public GameBoard(ClientConnection currConnec, char faction) {
 
@@ -59,7 +55,7 @@ public class GameBoard {
 
         xoro = faction;
 
-        ClientConnection cc = new ClientConnection();
+        
 
         Stage gameStage = new Stage();
         VBox gameBox = new VBox();
@@ -125,80 +121,122 @@ public class GameBoard {
 
         //ButtonActions
         TL.setOnAction(event -> {
-            tempX = 0;
-            tempY = 0;
-            System.out.println("Button pressed at [0,0]");
-            System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+            if (TL.getText().equals("")) {
+                tempX = 0;
+                tempY = 0;
+                System.out.println("Button pressed at [0,0]");
+                System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
+            } else {
+                JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
+            }
 
         });
 
         TM.setOnAction(event -> {
-            tempX = 0;
-            tempY = 1;
-            System.out.println("Button pressed at [0,1]");
-            System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+            if (TM.getText().equals("")) {
+                tempX = 0;
+                tempY = 1;
+                System.out.println("Button pressed at [0,1]");
+                System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
+            } else {
+                JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
+            }
         });
 
         TR.setOnAction(event -> {
-            tempX = 0;
-            tempY = 2;
-            System.out.println("Button pressed at [0,2]");
-            System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+            if (TR.getText().equals("")) {
+                tempX = 0;
+                tempY = 2;
+                System.out.println("Button pressed at [0,2]");
+                System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
 
-            cc.makeMove(tempX, tempY);
+                currConnec.makeMove(tempX, tempY);
+            } else {
+                JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
+            }
         });
 
         CL.setOnAction(event -> {
-            tempX = 1;
-            tempY = 0;
-            System.out.println("Button pressed at [1,0]");
-            System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+            if (CL.getText().equals("")) {
 
-            cc.makeMove(tempX, tempY);
+                tempX = 1;
+                tempY = 0;
+                System.out.println("Button pressed at [1,0]");
+                System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+
+                currConnec.makeMove(tempX, tempY);
+            } else {
+                JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
+            }
         });
         CM.setOnAction(event -> {
-            tempX = 1;
-            tempY = 1;
-            System.out.println("Button pressed at [1,1]");
-            System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+            if (CM.getText().equals("")) {
 
-            cc.makeMove(tempX, tempY);
+                tempX = 1;
+                tempY = 1;
+                System.out.println("Button pressed at [1,1]");
+                System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+
+                currConnec.makeMove(tempX, tempY);
+            } else {
+                JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
+            }
         });
         CR.setOnAction(event -> {
-            tempX = 1;
-            tempY = 2;
-            System.out.println("Button pressed at [1,2]");
-            System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+            if (CR.getText().equals("")) {
 
-            cc.makeMove(tempX, tempY);
+                tempX = 1;
+                tempY = 2;
+                System.out.println("Button pressed at [1,2]");
+                System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+
+                currConnec.makeMove(tempX, tempY);
+            } else {
+                JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
+            }
         });
         BL.setOnAction(event -> {
-            tempX = 2;
-            tempY = 0;
-            System.out.println("Button pressed at [2,0]");
-            System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+            if (BL.getText().equals("")) {
 
-            cc.makeMove(tempX, tempY);
+                tempX = 2;
+                tempY = 0;
+                System.out.println("Button pressed at [2,0]");
+                System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+
+                currConnec.makeMove(tempX, tempY);
+            } else {
+                JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
+            }
         });
         BM.setOnAction(event -> {
-            tempX = 2;
-            tempY = 1;
-            System.out.println("Button pressed at [2,1]");
-            System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+            if (BM.getText().equals("")) {
 
-            cc.makeMove(tempX, tempY);
+                tempX = 2;
+                tempY = 1;
+                System.out.println("Button pressed at [2,1]");
+                System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+
+                currConnec.makeMove(tempX, tempY);
+            } else {
+                JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
+            }
         });
         BR.setOnAction(event -> {
-            tempX = 2;
-            tempY = 2;
-            System.out.println("Button pressed at [2,2]");
-            System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+            if (BR.getText().equals("")) {
 
-            cc.makeMove(tempX, tempY);
+                tempX = 2;
+                tempY = 2;
+                System.out.println("Button pressed at [2,2]");
+                System.out.println("Temp er sat til [" + tempX + "," + tempY + "]");
+
+                currConnec.makeMove(tempX, tempY);
+            } else {
+                JOptionPane.showMessageDialog(null, "Feltet er ikke tomt!");
+            }
         });
 
         //USERNAMES OG VS I LEFTBOX
@@ -214,16 +252,6 @@ public class GameBoard {
 
         leftBox.getChildren().addAll(player1, vs, player2);
 
-        //TimeBox og antal moves i RIGHTBOX
-        timerLabel = new Label("30 sekunder pr tur.");
-        timerLabel.setPrefHeight(prefHeightTicTac / 2);
-        Button startGame = new Button("Start game!");
-
-//      Timer virkede IKKE, det er ikke muligt at bruge en låse en thread til at ændre i UI, da der er allerede er en tråd reserveret til UI.
-//        startGame.setOnAction(event -> {
-//            startTurnTimer();
-//        });
-        rightBox.getChildren().addAll(startGame, timerLabel);
 
         //Add alle topboxes til upperBox
         upperBox.getChildren().addAll(leftBox, middleBox, rightBox);
@@ -242,9 +270,13 @@ public class GameBoard {
 
             try {
 
-                currentConnection.sendChatText(chat.getText());
-                System.out.println(chat.getText());
-                chat.clear();
+                String text = chat.getText();
+                if (InputCheck.isValid("Message", text)) {
+                    currentConnection.sendChatText(text);
+                    System.out.println(text);
+                    chat.clear();
+
+                }
 
             } catch (IOException ex) {
                 Logger.getLogger(LobbyGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -266,32 +298,41 @@ public class GameBoard {
         String coordmark = coords;
 
         if (xoro == 'o') {
-            mark = "o";
+            mark = "O";
         } else if (xoro == 'x') {
-            mark = "x";
+            mark = "X";
         } else {
             JOptionPane.showMessageDialog(null, "Ingen faction valgt, luk programmet og start forfra.");
         }
 
         if (isLegit == true) {
             switch (coordmark) {
-                case "00": TL.setText(mark);
+                case "00":
+                    TL.setText(mark);
                     break;
-                case "01": TM.setText(mark);
+                case "01":
+                    TM.setText(mark);
                     break;
-                case "02": TR.setText(mark);
+                case "02":
+                    TR.setText(mark);
                     break;
-                case "10": CL.setText(mark);
+                case "10":
+                    CL.setText(mark);
                     break;
-                case "11": CM.setText(mark);
+                case "11":
+                    CM.setText(mark);
                     break;
-                case "12": CR.setText(mark);
+                case "12":
+                    CR.setText(mark);
                     break;
-                case "20": BL.setText(mark);
+                case "20":
+                    BL.setText(mark);
                     break;
-                case "21": BM.setText(mark);
+                case "21":
+                    BM.setText(mark);
                     break;
-                case "22": BR.setText(mark);
+                case "22":
+                    BR.setText(mark);
                     break;
 
             }

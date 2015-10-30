@@ -17,6 +17,7 @@ public class ClientConnection extends Thread{
 	DataOutputStream outToServer;
 	boolean correct = false;
 	BufferedReader in;
+	GameBoard gb;
 	String username;
         char splitChar = (char) 007;
         
@@ -75,13 +76,18 @@ public class ClientConnection extends Thread{
 		 
 		 
 	}
-	public void makeMove(int x, int y)
+	public void makeMove(int x, int y, GameBoard g)
 	{
+		setGameboard(g);
 		 try {
+			 
+			System.out.println( getSocket().toString());
+			 System.out.println(x);
 			outToServer = new DataOutputStream(getSocket().getOutputStream());
-		
+		System.out.println(x);
 		 outToServer.writeBytes("MOVE"+ splitChar + x + splitChar + y + '\n' );
-		 outToServer.flush();
+		 
+		 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace(); 
@@ -145,18 +151,19 @@ public class ClientConnection extends Thread{
 			 if(Chat.equals("FALSE"))
 			 {
 				 System.out.println("dit move er ikke okay.");
-				 GameBoard.setTic(Message,false);
+				 gb.setTic(Message,false);
 			 }
 			 
 			 if(Chat.equals("TRUE"))
 			 {
-				 GameBoard.setTic(Message,true);
+				 System.out.println("legit");
+				 gb.setTic(Message,true);
 				 //gui.ValidMove(True, Message);
 			 }
 			 
 			 if(Chat.equals("EXMOVE"))
 			 {
-				 GameBoard.setTic(Message,true);
+				 gb.setTic(Message,true);
 //				 gui.makemove(Message, userName);
 			 }
 			 
@@ -249,6 +256,24 @@ public class ClientConnection extends Thread{
 		return username;
 	}
 	
+	public void newGame()
+	{
+		try{
+			outToServer = new DataOutputStream(getSocket().getOutputStream()); 
+			outToServer.writeBytes("NEW" + splitChar + getUsername()+ '\n');
+			
+			outToServer.flush();
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+	}
+	
+	public void setGameboard(GameBoard g)
+	{
+		gb = g ;
+		
+	}
 	
 	
 
