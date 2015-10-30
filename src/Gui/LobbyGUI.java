@@ -106,6 +106,8 @@ public class LobbyGUI {
 
             selectedGameVariable = 't';
 
+            currentConnection.newGame();
+            
             GameBoard testytest = new GameBoard(currentConnection, teamToPlay);
 
             System.out.println(event.getSource() + " pressed");
