@@ -38,15 +38,15 @@ public class GameBoard {
 
     static char xoro;
 
-    static Button TL;
-    static Button TM;
-    static Button TR;
-    static Button CL;
-    static Button CM;
-    static Button CR;
-    static Button BM;
-    static Button BL;
-    static Button BR;
+    Button TL;
+    Button TM;
+    Button TR;
+    Button CL;
+    Button CM;
+    Button CR;
+    Button BM;
+    Button BL;
+    Button BR;
 
     public GameBoard(ClientConnection currConnec, char faction) {
 
@@ -293,7 +293,7 @@ public class GameBoard {
 
     }
 
-    public static void setTic(String coords, boolean isLegit) {
+    public void setTic(String coords, boolean isLegit) {
         String mark = "T";
         String coordmark = coords;
 
@@ -306,6 +306,7 @@ public class GameBoard {
         }
 
         if (isLegit == true) {
+            System.out.println("hep1");
             switch (coordmark) {
                 case "00":
                     TL.setText(mark);
@@ -336,6 +337,7 @@ public class GameBoard {
                     break;
 
             }
+            System.out.println("hep");
 
         } else {
             JOptionPane.showMessageDialog(null, "Det kan du ikke!");
